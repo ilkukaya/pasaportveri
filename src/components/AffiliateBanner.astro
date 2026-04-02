@@ -2,54 +2,92 @@
 interface Props {
   type: 'insurance' | 'esim' | 'hotel';
   countryName?: string;
+  compact?: boolean;
 }
 
-const { type, countryName } = Astro.props;
+const { type, countryName, compact = false } = Astro.props;
 
-const affiliateLinks = {
+const config = {
   insurance: {
     url: 'https://safetywing.com/nomad-insurance?referenceID=REFID',
-    title: countryName ? `${countryName} İçin Seyahat Sigortası` : 'Seyahat Sigortası',
+    icon: '🛡️',
+    gradient: 'from-emerald-600 to-teal-700',
+    title: countryName ? `${countryName} Seyahat Sigortasi` : 'Seyahat Sigortasi',
     description: countryName
-      ? `${countryName} seyahatiniz için kapsamlı seyahat sigortası. Sağlık, bagaj kaybı ve uçuş iptali teminatı.`
-      : 'Yurt dışı seyahatinizde güvende olun. Sağlık, bagaj ve uçuş iptali teminatı.',
-    cta: 'Sigorta Al'
+      ? `${countryName} seyahatiniz icin kapsamli seyahat sigortasi. Saglik, bagaj kaybi ve ucus iptali teminati.`
+      : 'Yurt disi seyahatinizde guvende olun. Saglik, bagaj ve ucus iptali teminati.',
+    cta: 'Sigorta Al',
+    badge: 'En Populer'
   },
   esim: {
     url: 'https://ref.airalo.com/REFID',
-    title: countryName ? `${countryName} için eSIM` : 'Yurt Dışında İnternet: eSIM',
+    icon: '📱',
+    gradient: 'from-violet-600 to-purple-700',
+    title: countryName ? `${countryName} icin eSIM` : 'Yurt Disinda Internet: eSIM',
     description: countryName
-      ? `${countryName}'de anında internet bağlantısı. Fiziksel SIM kart gerekmez, online aktifleştirin.`
-      : 'Yurt dışında anında internet. Fiziksel SIM kart gerekmez, online aktifleştirin.',
-    cta: 'eSIM Al'
+      ? `${countryName}'de aninda internet baglantisi. Fiziksel SIM kart gerekmez, online aktiflestirin.`
+      : 'Yurt disinda aninda internet. Fiziksel SIM kart gerekmez, online aktiflestirin.',
+    cta: 'eSIM Al',
+    badge: 'Aninda Aktif'
   },
   hotel: {
     url: 'https://tp.media/click?shmarker=MARKER&promo_id=4132&source_type=customlink&type=click&custom_url=booking.com',
-    title: countryName ? `${countryName}'de Konaklama` : 'En İyi Otel Fiyatları',
+    icon: '🏨',
+    gradient: 'from-blue-600 to-indigo-700',
+    title: countryName ? `${countryName}'de Konaklama` : 'En Iyi Otel Fiyatlari',
     description: countryName
-      ? `${countryName}'de en uygun otel fiyatlarını karşılaştırın. Ücretsiz iptal seçenekleri.`
-      : 'Dünya genelinde en uygun otel fiyatlarını karşılaştırın. Ücretsiz iptal seçenekleri.',
-    cta: 'Otel Bul'
+      ? `${countryName}'de en uygun otel fiyatlarini karsilastirin. Ucretsiz iptal secenekleri.`
+      : 'Dunya genelinde en uygun otel fiyatlarini karsilastirin. Ucretsiz iptal secenekleri.',
+    cta: 'Otel Bul',
+    badge: 'Ucretsiz Iptal'
   }
 };
 
-const link = affiliateLinks[type];
+const link = config[type];
 ---
 
-<div class="affiliate-banner bg-gradient-to-r from-secondary to-slate-800 rounded-xl p-5 text-white my-6 relative">
-  <span class="absolute top-2 right-3 text-[10px] text-slate-400 uppercase tracking-wider">Sponsorlu</span>
-  <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-    <div>
-      <h3 class="font-bold text-lg">{link.title}</h3>
-      <p class="text-slate-300 text-sm mt-1">{link.description}</p>
+{compact ? (
+  <a
+    href={link.url}
+    target="_blank"
+    rel="noopener noreferrer nofollow"
+    class="flex items-center gap-3 p-3 rounded-lg bg-slate-50 border border-slate-200 hover:border-slate-300 hover:bg-slate-100 transition-all group"
+  >
+    <span class="text-2xl flex-shrink-0">{link.icon}</span>
+    <div class="flex-1 min-w-0">
+      <div class="text-sm font-semibold text-slate-900 group-hover:text-primary transition-colors">{link.title}</div>
+      <div class="text-xs text-slate-500 truncate">{link.description}</div>
     </div>
-    <a
-      href={link.url}
-      target="_blank"
-      rel="noopener noreferrer nofollow"
-      class="inline-flex items-center px-5 py-2.5 bg-white text-secondary font-semibold rounded-lg hover:bg-slate-100 transition-colors whitespace-nowrap text-sm"
-    >
-      {link.cta} →
-    </a>
+    <span class="text-xs font-medium text-white bg-secondary px-2.5 py-1 rounded-full whitespace-nowrap flex-shrink-0">
+      {link.cta} &rarr;
+    </span>
+  </a>
+) : (
+  <div class={`affiliate-banner bg-gradient-to-r ${link.gradient} rounded-xl overflow-hidden my-6 relative`}>
+    <div class="absolute top-0 right-0 bg-white/20 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-bl-lg">
+      Sponsorlu
+    </div>
+    <div class="p-5 sm:p-6">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div class="flex items-start gap-3">
+          <span class="text-3xl mt-0.5 flex-shrink-0">{link.icon}</span>
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <h3 class="font-bold text-lg text-white">{link.title}</h3>
+              <span class="text-[10px] font-semibold bg-white/20 text-white px-2 py-0.5 rounded-full">{link.badge}</span>
+            </div>
+            <p class="text-white/80 text-sm leading-relaxed">{link.description}</p>
+          </div>
+        </div>
+        <a
+          href={link.url}
+          target="_blank"
+          rel="noopener noreferrer nofollow"
+          class="inline-flex items-center px-6 py-2.5 bg-white text-slate-900 font-semibold rounded-lg hover:bg-slate-100 transition-colors whitespace-nowrap text-sm shadow-lg hover:shadow-xl"
+        >
+          {link.cta} &rarr;
+        </a>
+      </div>
+    </div>
   </div>
-</div>
+)}

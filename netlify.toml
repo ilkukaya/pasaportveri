@@ -12,12 +12,44 @@
   to = "/pasaport-siralamasi"
   status = 301
 
+[[redirects]]
+  from = "/vize-gerekli-ulkeler"
+  to = "/vize-gerekli"
+  status = 301
+
+[[redirects]]
+  from = "/vizesiz"
+  to = "/vizesiz-ulkeler"
+  status = 301
+
+[[redirects]]
+  from = "/kapida-vize-ulkeler"
+  to = "/kapida-vize"
+  status = 301
+
+[[redirects]]
+  from = "/e-vize-ulkeler"
+  to = "/e-vize"
+  status = 301
+
+[[redirects]]
+  from = "/pasaport-karşılaştır"
+  to = "/pasaport-karsilastir"
+  status = 301
+
+[[redirects]]
+  from = "/kaç-gün-kalabilirim"
+  to = "/kac-gun-kalabilirim"
+  status = 301
+
 [[headers]]
   for = "/*"
   [headers.values]
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    X-XSS-Protection = "1; mode=block"
     Cache-Control = "public, max-age=3600, stale-while-revalidate=86400"
 
 [[headers]]

@@ -1,13 +1,25 @@
 ---
+import passportData from '../data/passport_data.json';
+
 interface Props {
   placeholder?: string;
 }
 
 const { placeholder = 'Gitmek istediğin ülkeyi ara...' } = Astro.props;
+const countriesForSearch = passportData.countries.map(c => ({
+  slug: c.slug,
+  name_tr: c.name_tr,
+  name_en: c.name_en,
+  code: c.code,
+  visa_status: c.visa_status,
+  visa_status_tr: c.visa_status_tr,
+  flag_url: c.flag_url,
+  max_stay_days: c.max_stay_days
+}));
 ---
 
-<div class="relative max-w-xl mx-auto">
-  <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+<div class="relative max-w-xl mx-auto" id="search-wrapper">
+  <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
   </svg>
   <input
@@ -17,5 +29,111 @@ const { placeholder = 'Gitmek istediğin ülkeyi ara...' } = Astro.props;
     class="search-input"
     aria-label="Ülke ara"
     autocomplete="off"
+    aria-expanded="false"
+    aria-controls="search-results"
+    role="combobox"
   />
+  <div
+    id="search-results"
+    class="absolute top-full left-0 right-0 mt-1 bg-white rounded-xl shadow-2xl border border-slate-200 max-h-80 overflow-y-auto z-50 hidden"
+    role="listbox"
+  >
+  </div>
 </div>
+
+<script define:vars={{ countriesForSearch }}>
+  const searchInput = document.getElementById('country-search');
+  const resultsBox = document.getElementById('search-results');
+  if (!searchInput || !resultsBox) throw new Error('Search elements not found');
+
+  const statusColors = {
+    visa_free: 'bg-green-100 text-green-800',
+    visa_on_arrival: 'bg-amber-100 text-amber-800',
+    e_visa: 'bg-blue-100 text-blue-800',
+    visa_required: 'bg-red-100 text-red-800',
+    no_admission: 'bg-gray-100 text-gray-800'
+  };
+
+  function turkishLower(str) {
+    return str.replace(/İ/g, 'i').replace(/I/g, 'ı').replace(/Ş/g, 'ş').replace(/Ç/g, 'ç')
+      .replace(/Ü/g, 'ü').replace(/Ö/g, 'ö').replace(/Ğ/g, 'ğ').toLowerCase();
+  }
+
+  let activeIndex = -1;
+
+  function showResults(query) {
+    if (!query || query.length < 1) {
+      resultsBox.classList.add('hidden');
+      searchInput.setAttribute('aria-expanded', 'false');
+      return;
+    }
+
+    const q = turkishLower(query);
+    const matches = countriesForSearch.filter(c =>
+      turkishLower(c.name_tr).includes(q) ||
+      turkishLower(c.name_en).includes(q) ||
+      c.code.toLowerCase().includes(q)
+    ).slice(0, 10);
+
+    if (matches.length === 0) {
+      resultsBox.innerHTML = '<div class="px-4 py-3 text-sm text-slate-500">Sonuç bulunamadı</div>';
+      resultsBox.classList.remove('hidden');
+      searchInput.setAttribute('aria-expanded', 'true');
+      return;
+    }
+
+    activeIndex = -1;
+    resultsBox.innerHTML = matches.map((c, i) => `
+      <a href="/ulkeler/${c.slug}" class="search-result-item flex items-center gap-3 px-4 py-3 hover:bg-slate-50 transition-colors cursor-pointer border-b border-slate-100 last:border-0" data-index="${i}" role="option">
+        <img src="${c.flag_url}" width="28" height="21" alt="" class="rounded shadow-sm flex-shrink-0" loading="lazy" />
+        <div class="flex-1 min-w-0">
+          <div class="font-medium text-slate-900 text-sm truncate">${c.name_tr}</div>
+          <div class="text-xs text-slate-400">${c.name_en}</div>
+        </div>
+        <span class="text-[10px] font-medium px-2 py-0.5 rounded-full ${statusColors[c.visa_status] || ''} flex-shrink-0">${c.visa_status_tr}</span>
+        ${c.max_stay_days ? `<span class="text-[10px] text-slate-400 flex-shrink-0">${c.max_stay_days} gün</span>` : ''}
+      </a>
+    `).join('');
+
+    resultsBox.classList.remove('hidden');
+    searchInput.setAttribute('aria-expanded', 'true');
+  }
+
+  searchInput.addEventListener('input', (e) => {
+    showResults(e.target.value);
+    // Also trigger table filter if on homepage
+    if (typeof window.__applyAllFilters === 'function') {
+      window.__applyAllFilters();
+    }
+  });
+
+  searchInput.addEventListener('keydown', (e) => {
+    const items = resultsBox.querySelectorAll('.search-result-item');
+    if (!items.length) return;
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      activeIndex = Math.min(activeIndex + 1, items.length - 1);
+      items.forEach((item, i) => item.classList.toggle('bg-slate-100', i === activeIndex));
+      items[activeIndex]?.scrollIntoView({ block: 'nearest' });
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      activeIndex = Math.max(activeIndex - 1, 0);
+      items.forEach((item, i) => item.classList.toggle('bg-slate-100', i === activeIndex));
+      items[activeIndex]?.scrollIntoView({ block: 'nearest' });
+    } else if (e.key === 'Enter' && activeIndex >= 0) {
+      e.preventDefault();
+      items[activeIndex]?.click();
+    } else if (e.key === 'Escape') {
+      resultsBox.classList.add('hidden');
+      searchInput.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('#search-wrapper')) {
+      resultsBox.classList.add('hidden');
+      searchInput.setAttribute('aria-expanded', 'false');
+    }
+  });
+</script>

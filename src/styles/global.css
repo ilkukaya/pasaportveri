@@ -41,27 +41,32 @@ body {
   white-space: nowrap;
 }
 
-.visa-badge.visa-free {
+.visa-badge.visa-free,
+.visa-badge.visa_free {
   background-color: #F0FDF4;
   color: #16A34A;
 }
 
-.visa-badge.visa-on-arrival {
+.visa-badge.visa-on-arrival,
+.visa-badge.visa_on_arrival {
   background-color: #FFFBEB;
   color: #D97706;
 }
 
-.visa-badge.e-visa {
+.visa-badge.e-visa,
+.visa-badge.e_visa {
   background-color: #EFF6FF;
   color: #2563EB;
 }
 
-.visa-badge.visa-required {
+.visa-badge.visa-required,
+.visa-badge.visa_required {
   background-color: #FEF2F2;
   color: #DC2626;
 }
 
-.visa-badge.no-admission {
+.visa-badge.no-admission,
+.visa-badge.no_admission {
   background-color: #F3F4F6;
   color: #6B7280;
 }

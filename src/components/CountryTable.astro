@@ -9,6 +9,21 @@ const { countries } = Astro.props;
 ---
 
 <div class="bg-white rounded-xl border border-slate-200 overflow-hidden">
+  <div class="px-4 py-2 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
+    <span id="table-result-count" class="text-sm text-slate-500">{countries.length} ülke listeleniyor</span>
+    <div class="relative max-w-xs w-full sm:w-64 ml-4">
+      <svg class="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+      </svg>
+      <input
+        id="table-search"
+        type="search"
+        placeholder="Tabloda ara..."
+        class="w-full pl-8 pr-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-secondary"
+        autocomplete="off"
+      />
+    </div>
+  </div>
   <div class="overflow-x-auto">
     <table class="w-full text-sm">
       <thead class="bg-slate-50 border-b border-slate-200">
@@ -23,7 +38,14 @@ const { countries } = Astro.props;
       </thead>
       <tbody id="country-table-body">
         {countries.map(country => (
-          <tr class="table-row border-b border-slate-100">
+          <tr
+            class="table-row border-b border-slate-100"
+            data-continent={country.continent}
+            data-visa-status={country.visa_status}
+            data-name-tr={country.name_tr.toLowerCase()}
+            data-name-en={country.name_en.toLowerCase()}
+            data-code={country.code.toLowerCase()}
+          >
             <td class="px-4 py-3">
               <img
                 src={country.flag_url}
@@ -67,14 +89,49 @@ const { countries } = Astro.props;
 <script>
   const searchInput = document.getElementById('country-search') as HTMLInputElement;
   const tableBody = document.getElementById('country-table-body');
-  if (searchInput && tableBody) {
-    searchInput.addEventListener('input', (e) => {
-      const query = (e.target as HTMLInputElement).value.toLowerCase();
-      const rows = tableBody.querySelectorAll('tr');
-      rows.forEach(row => {
-        const text = row.textContent?.toLowerCase() || '';
-        (row as HTMLElement).style.display = text.includes(query) ? '' : 'none';
-      });
+
+  function applyAllFilters() {
+    if (!tableBody) return;
+    const query = searchInput?.value?.toLowerCase() || '';
+    const rows = tableBody.querySelectorAll('tr');
+    const activeContBtn = document.querySelector('[data-continent].active') as HTMLElement;
+    const activeVisaBtn = document.querySelector('[data-visa-status].active') as HTMLElement;
+    const activeContinent = activeContBtn?.dataset.continent || 'all';
+    const activeVisa = activeVisaBtn?.dataset.visaStatus || 'all';
+
+    let visibleCount = 0;
+    rows.forEach(row => {
+      const el = row as HTMLElement;
+      const nameTr = el.dataset.nameTr || '';
+      const nameEn = el.dataset.nameEn || '';
+      const code = el.dataset.code || '';
+      const continent = el.dataset.continent || '';
+      const visaStatus = el.dataset.visaStatus || '';
+
+      const matchSearch = !query || nameTr.includes(query) || nameEn.includes(query) || code.includes(query);
+      const matchContinent = activeContinent === 'all' || continent === activeContinent;
+      const matchVisa = activeVisa === 'all' || visaStatus === activeVisa;
+
+      const visible = matchSearch && matchContinent && matchVisa;
+      el.style.display = visible ? '' : 'none';
+      if (visible) visibleCount++;
+    });
+
+    const counter = document.getElementById('table-result-count');
+    if (counter) counter.textContent = `${visibleCount} ülke listeleniyor`;
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener('input', applyAllFilters);
+  }
+
+  const tableSearch = document.getElementById('table-search') as HTMLInputElement;
+  if (tableSearch) {
+    tableSearch.addEventListener('input', () => {
+      if (searchInput) searchInput.value = tableSearch.value;
+      applyAllFilters();
     });
   }
+
+  (window as any).__applyAllFilters = applyAllFilters;
 </script>
