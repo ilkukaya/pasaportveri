@@ -1,0 +1,86 @@
+---
+const currentYear = new Date().getFullYear();
+
+const quickLinks = [
+  { label: 'Vizesiz Ülkeler', href: '/vizesiz-ulkeler' },
+  { label: 'Kapıda Vize', href: '/kapida-vize' },
+  { label: 'E-Vize', href: '/e-vize' },
+  { label: 'Vize Gerekli', href: '/vize-gerekli' },
+  { label: 'Pasaport Sıralaması', href: '/pasaport-siralamasi' },
+];
+
+const tools = [
+  { label: 'Kaç Gün Kalabilirim?', href: '/kac-gun-kalabilirim' },
+  { label: 'Pasaport Karşılaştır', href: '/pasaport-karsilastir' },
+];
+
+const infoLinks = [
+  { label: 'Seyahat Sigortası', href: '/seyahat-sigortasi' },
+  { label: 'eSIM Rehberi', href: '/esim-rehberi' },
+  { label: 'Hakkımızda', href: '/hakkimizda' },
+  { label: 'İletişim', href: '/iletisim' },
+];
+---
+
+<footer class="bg-secondary text-slate-300" role="contentinfo">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+      <div class="col-span-2 md:col-span-1">
+        <a href="/" class="flex items-center gap-2 mb-4">
+          <span class="text-2xl" aria-hidden="true">🛂</span>
+          <span class="text-xl font-extrabold text-white tracking-tight">
+            pasaport<span class="text-red-400">veri</span>
+          </span>
+        </a>
+        <p class="text-sm text-slate-400 leading-relaxed">
+          Türk pasaportu sahipleri için güncel vize bilgileri, pasaport güç sıralaması ve seyahat hesaplama araçları.
+        </p>
+        <p class="text-xs text-slate-500 mt-4">
+          Son güncelleme: {new Date().toLocaleDateString('tr-TR', { year: 'numeric', month: 'long', day: 'numeric' })}
+        </p>
+      </div>
+
+      <div>
+        <h3 class="text-sm font-semibold text-white uppercase tracking-wider mb-4">Hızlı Linkler</h3>
+        <ul class="space-y-2">
+          {quickLinks.map(link => (
+            <li>
+              <a href={link.href} class="text-sm hover:text-white transition-colors">{link.label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-sm font-semibold text-white uppercase tracking-wider mb-4">Araçlar</h3>
+        <ul class="space-y-2">
+          {tools.map(tool => (
+            <li>
+              <a href={tool.href} class="text-sm hover:text-white transition-colors">{tool.label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-sm font-semibold text-white uppercase tracking-wider mb-4">Bilgi</h3>
+        <ul class="space-y-2">
+          {infoLinks.map(link => (
+            <li>
+              <a href={link.href} class="text-sm hover:text-white transition-colors">{link.label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="border-t border-slate-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500">
+        <p>&copy; {currentYear} pasaportveri.com - Tüm hakları saklıdır.</p>
+        <p>Kaynak: Henley Passport Index, Passport Index</p>
+      </div>
+    </div>
+  </div>
+</footer>

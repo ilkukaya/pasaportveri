@@ -1,0 +1,295 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import AffiliateBanner from '../../components/AffiliateBanner.astro';
+import AdSenseSlot from '../../components/AdSenseSlot.astro';
+import { getVisaStatusCounts } from '../../utils/visaHelpers';
+import { getRelatedCountries, formatPopulation, getStayText, getProcessingText } from '../../utils/countryHelpers';
+import { generateCountryMeta, generateCountrySchema, generateBreadcrumbSchema } from '../../utils/seoHelpers';
+
+import passportData from '../../data/passport_data.json';
+
+export function getStaticPaths() {
+  return passportData.countries.map(country => ({
+    params: { ulke: country.slug },
+    props: { country }
+  }));
+}
+
+interface Props {
+  country: typeof passportData.countries[0];
+}
+
+const { country } = Astro.props;
+const allCountries = passportData.countries;
+const relatedCountries = getRelatedCountries(allCountries, country, 4);
+const counts = getVisaStatusCounts(allCountries);
+
+const seo = generateCountryMeta(country);
+const countrySchema = generateCountrySchema(country);
+const breadcrumbSchema = generateBreadcrumbSchema([
+  { name: 'Ana Sayfa', url: 'https://pasaportveri.com/' },
+  { name: 'Ülkeler', url: 'https://pasaportveri.com/vizesiz-ulkeler' },
+  { name: country.name_tr, url: seo.canonical }
+]);
+
+const statusColors: Record<string, string> = {
+  visa_free: 'bg-green-100 text-green-800 border-green-200',
+  visa_on_arrival: 'bg-amber-100 text-amber-800 border-amber-200',
+  e_visa: 'bg-blue-100 text-blue-800 border-blue-200',
+  visa_required: 'bg-red-100 text-red-800 border-red-200',
+  no_admission: 'bg-gray-100 text-gray-800 border-gray-200'
+};
+
+const statusBgGradient: Record<string, string> = {
+  visa_free: 'from-green-500 to-green-600',
+  visa_on_arrival: 'from-amber-500 to-amber-600',
+  e_visa: 'from-blue-500 to-blue-600',
+  visa_required: 'from-red-500 to-red-600',
+  no_admission: 'from-gray-500 to-gray-600'
+};
+
+const statusIcon: Record<string, string> = {
+  visa_free: '✓',
+  visa_on_arrival: '◉',
+  e_visa: '⬡',
+  visa_required: '✗',
+  no_admission: '⛔'
+};
+---
+
+<BaseLayout title={seo.title} description={seo.description} canonical={seo.canonical} ogImage={seo.ogImage} ogType={seo.ogType} jsonLd={`${countrySchema}\n${breadcrumbSchema}`}>
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <Breadcrumb items={[
+      { label: 'Ana Sayfa', href: '/' },
+      { label: 'Ülkeler', href: '/vizesiz-ulkeler' },
+      { label: country.name_tr }
+    ]} />
+
+    <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden mb-8">
+      <div class={`bg-gradient-to-r ${statusBgGradient[country.visa_status] || 'from-slate-500 to-slate-600'} text-white p-6 sm:p-8`}>
+        <div class="flex items-center gap-4">
+          <img
+            src={country.flag_url}
+            srcset={`${country.flag_url.replace('w80', 'w160')} 2x`}
+            width="72"
+            height="54"
+            alt={`${country.name_tr} bayrağı`}
+            class="rounded-lg shadow-lg"
+          />
+          <div>
+            <h1 class="text-2xl sm:text-3xl font-extrabold">{country.name_tr}</h1>
+            <p class="text-white/80 text-sm mt-1">{country.name_en}</p>
+          </div>
+        </div>
+        <div class="mt-6 inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full">
+          <span class="text-lg">{statusIcon[country.visa_status]}</span>
+          <span class="font-bold text-lg">🇹🇷 Türk Pasaportuyla: {country.visa_status_tr.toUpperCase()}</span>
+        </div>
+      </div>
+
+      <div class="p-6 sm:p-8">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+          <div class="bg-slate-50 rounded-lg p-4 text-center">
+            <div class="text-xs text-slate-500 mb-1">Vize Durumu</div>
+            <span class={`visa-badge ${country.visa_status}`}>{country.visa_status_tr}</span>
+          </div>
+          <div class="bg-slate-50 rounded-lg p-4 text-center">
+            <div class="text-xs text-slate-500 mb-1">Maksimum Kalış</div>
+            <div class="font-bold text-slate-900">{getStayText(country.max_stay_days)}</div>
+          </div>
+          <div class="bg-slate-50 rounded-lg p-4 text-center">
+            <div class="text-xs text-slate-500 mb-1">Vize Ücreti</div>
+            <div class="font-bold text-slate-900">{country.visa_fee_usd ? `$${country.visa_fee_usd}` : 'Ücretsiz'}</div>
+          </div>
+          <div class="bg-slate-50 rounded-lg p-4 text-center">
+            <div class="text-xs text-slate-500 mb-1">İşlem Süresi</div>
+            <div class="font-bold text-slate-900">{getProcessingText(country.processing_days)}</div>
+          </div>
+        </div>
+
+        {country.visa_type_details && (
+          <div class="bg-slate-50 rounded-lg p-4 mb-6">
+            <div class="text-sm text-slate-600">
+              <span class="font-semibold">Vize Türü:</span> {country.visa_type_details}
+            </div>
+          </div>
+        )}
+
+        {country.notes_tr && (
+          <div class="prose prose-sm max-w-none mb-6">
+            <p class="text-slate-700 leading-relaxed">{country.notes_tr}</p>
+          </div>
+        )}
+
+        {(country.official_embassy_url || country.application_url) && (
+          <div class="flex flex-wrap gap-3 mb-6">
+            {country.official_embassy_url && (
+              <a
+                href={country.official_embassy_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center px-4 py-2 bg-secondary text-white text-sm font-medium rounded-lg hover:bg-slate-800 transition-colors"
+              >
+                🏛️ Resmi Büyükelçilik
+              </a>
+            )}
+            {country.application_url && (
+              <a
+                href={country.application_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center px-4 py-2 bg-primary text-white text-sm font-medium rounded-lg hover:bg-red-700 transition-colors"
+              >
+                📝 Başvuru Yap
+              </a>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div class="md:col-span-2 space-y-6">
+        <div class="bg-white rounded-xl border border-slate-200 p-6">
+          <h2 class="text-lg font-bold text-slate-900 mb-4">Ülke Bilgileri</h2>
+          <dl class="grid grid-cols-2 gap-4 text-sm">
+            <div>
+              <dt class="text-slate-500">Başkent</dt>
+              <dd class="font-medium text-slate-900">{country.capital_tr}</dd>
+            </div>
+            <div>
+              <dt class="text-slate-500">Nüfus</dt>
+              <dd class="font-medium text-slate-900">{formatPopulation(country.population)}</dd>
+            </div>
+            <div>
+              <dt class="text-slate-500">Dil</dt>
+              <dd class="font-medium text-slate-900">{country.language_tr}</dd>
+            </div>
+            <div>
+              <dt class="text-slate-500">Para Birimi</dt>
+              <dd class="font-medium text-slate-900">{country.currency} ({country.currency_symbol})</dd>
+            </div>
+            <div>
+              <dt class="text-slate-500">Kıta</dt>
+              <dd class="font-medium text-slate-900">{country.continent_tr}</dd>
+            </div>
+            <div>
+              <dt class="text-slate-500">Seyahat Tavsiyesi</dt>
+              <dd class="font-medium {country.advisory_level <= 2 ? 'text-green-600' : country.advisory_level === 3 ? 'text-amber-600' : 'text-red-600'}">
+                {country.advisory_text_tr}
+              </dd>
+            </div>
+          </dl>
+        </div>
+
+        <AdSenseSlot slot="ADSENSE_SLOT_COUNTRY_1" format="rectangle" />
+
+        <AffiliateBanner type="insurance" countryName={country.name_tr} />
+        <AffiliateBanner type="esim" countryName={country.name_tr} />
+        <AffiliateBanner type="hotel" countryName={country.name_tr} />
+
+        <div class="bg-white rounded-xl border border-slate-200 p-6">
+          <h2 class="text-lg font-bold text-slate-900 mb-4">Vize Başvuru Bilgileri</h2>
+          {country.visa_status === 'visa_required' && (
+            <div class="space-y-4 text-sm text-slate-700">
+              <p>{country.name_tr} için vize başvurusu yapmanız gerekmektedir. Başvuru süreci genellikle şu adımlardan oluşur:</p>
+              <ol class="list-decimal list-inside space-y-2">
+                <li>Vize başvuru formunu doldurun</li>
+                <li>Gerekli belgeleri hazırlayın (pasaport, fotoğraf, seyahat sigortası, konaklama ve uçuş rezervasyonu)</li>
+                <li>Randevu alın {country.application_url ? `(<a href="${country.application_url}" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">başvuru linki</a>)` : ''}</li>
+                <li>Biometrik verilerinizi verin</li>
+                <li>Vize sonucunu bekleyin (ortalama {getProcessingText(country.processing_days)})</li>
+              </ol>
+              <div class="bg-amber-50 border border-amber-200 rounded-lg p-4 text-amber-800">
+                <strong>Önemli:</strong> Vize başvurunuzu seyahat tarihinizden en az {country.processing_days ? `${country.processing_days} gün` : '2-3 hafta'} önce yapmanız önerilir.
+              </div>
+            </div>
+          )}
+          {country.visa_status === 'e_visa' && (
+            <div class="space-y-4 text-sm text-slate-700">
+              <p>{country.name_tr} için e-vize başvurusu online olarak yapılabilmektedir.</p>
+              {country.application_url && (
+                <a
+                  href={country.application_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors"
+                >
+                  E-Vize Başvurusu Yap →
+                </a>
+              )}
+            </div>
+          )}
+          {country.visa_status === 'visa_on_arrival' && (
+            <div class="space-y-4 text-sm text-slate-700">
+              <p>{country.name_tr}'a vardığınızda havalimanında vize alabilirsiniz.</p>
+              <div class="bg-amber-50 border border-amber-200 rounded-lg p-4 text-amber-800">
+                <strong>Dikkat:</strong> Kapıda vize her zaman garanti değildir. Yanınızda yeterli nakit (USD/EUR), dönüş bileti ve otel rezervasyonu bulundurun.
+              </div>
+            </div>
+          )}
+          {country.visa_status === 'visa_free' && (
+            <div class="space-y-4 text-sm text-slate-700">
+              <p>{country.name_tr}'a vizesiz giriş yapabilirsiniz. Maksimum kalış süreniz <strong>{getStayText(country.max_stay_days)}</strong>.</p>
+              <div class="bg-green-50 border border-green-200 rounded-lg p-4 text-green-800">
+                <strong>İyi haber:</strong> Vize başvurusu yapmanıza gerek yok. Pasaportunuz ve dönüş biletinizle giriş yapabilirsiniz.
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      <aside class="space-y-6">
+        <div class="bg-white rounded-xl border border-slate-200 p-6">
+          <h3 class="font-bold text-slate-900 mb-3">Hızlı Bilgiler</h3>
+          <ul class="space-y-3 text-sm">
+            <li class="flex items-center gap-2">
+              <span class="text-slate-400">🏙️</span>
+              <span class="text-slate-600">Başkent: <strong>{country.capital_tr}</strong></span>
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-slate-400">💰</span>
+              <span class="text-slate-600">Para: <strong>{country.currency} ({country.currency_symbol})</strong></span>
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-slate-400">🗣️</span>
+              <span class="text-slate-600">Dil: <strong>{country.language_tr}</strong></span>
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-slate-400">👥</span>
+              <span class="text-slate-600">Nüfus: <strong>{formatPopulation(country.population)}</strong></span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-xl border border-slate-200 p-6">
+          <h3 class="font-bold text-slate-900 mb-3">İlgili Ülkeler</h3>
+          <div class="space-y-3">
+            {relatedCountries.map(rc => (
+              <a
+                href={`/ulkeler/${rc.slug}`}
+                class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-50 transition-colors"
+              >
+                <img
+                  src={rc.flag_url}
+                  width="28"
+                  height="21"
+                  alt={`${rc.name_tr} bayrağı`}
+                  loading="lazy"
+                  class="rounded"
+                />
+                <div class="flex-1 min-w-0">
+                  <div class="text-sm font-medium text-slate-900 truncate">{rc.name_tr}</div>
+                  <span class={`visa-badge ${rc.visa_status} text-[10px] px-2 py-0.5`}>{rc.visa_status_tr}</span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <AdSenseSlot slot="ADSENSE_SLOT_COUNTRY_2" format="responsive" fullWidth />
+  </div>
+</BaseLayout>

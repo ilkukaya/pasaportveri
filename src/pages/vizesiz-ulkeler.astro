@@ -1,0 +1,182 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import CountryTable from '../components/CountryTable.astro';
+import AdSenseSlot from '../components/AdSenseSlot.astro';
+import AffiliateBanner from '../components/AffiliateBanner.astro';
+import { sortCountries, getVisaStatusCounts } from '../utils/visaHelpers';
+import { generateCategoryMeta, generateFAQSchema } from '../utils/seoHelpers';
+
+import passportData from '../data/passport_data.json';
+
+const allCountries = passportData.countries;
+const visaFreeCountries = sortCountries(
+  allCountries.filter(c => c.visa_status === 'visa_free'),
+  'name'
+);
+const seo = generateCategoryMeta('vizesiz-ulkeler');
+
+const continentLabels: Record<string, string> = {
+  europe: 'Avrupa',
+  asia: 'Asya',
+  africa: 'Afrika',
+  americas: 'Amerika',
+  oceania: 'Okyanusya'
+};
+const continentEmojis: Record<string, string> = {
+  europe: '🌍',
+  asia: '🌏',
+  africa: '🌍',
+  americas: '🌎',
+  oceania: '🌏'
+};
+const faqSchema = generateFAQSchema([
+  {
+    question: 'Türk pasaportuyla Avrupa\'ya vizesiz gidebilir miyim?',
+    answer: 'Hayır, Schengen bölgesi ülkelerine (Almanya, Fransa, İtalya vb.) vize gereklidir. Ancak Arnavutluk, Bosna Hersek, Sırbistan, Karadağ, Kuzey Makedonya, Moldova, Ukrayna ve Kosova\'ya vizesiz gidilebilir.'
+  },
+  {
+    question: 'En çok kaç gün kalınabilen vizesiz ülke hangisi?',
+    answer: 'Gürcistan 365 gün (1 yıl) ile en uzun vizesiz kalış süresini sunmaktadır. Peru 183 gün, Meksika ve Panama ise 180 gün kalış imkânı sunmaktadır.'
+  },
+  {
+    question: 'Türk pasaportuyla Japonya\'ya vizesiz gidilebilir mi?',
+    answer: 'Evet, Türk pasaportu sahipleri 2024 yılından itibaren Japonya\'ya 90 güne kadar vizesiz giriş yapabilmektedir.'
+  },
+  {
+    question: 'Latin Amerika\'ya vizesiz gidilebilir mi?',
+    answer: 'Evet, Brezilya, Arjantin, Şili, Kolombiya, Peru, Meksika, Ekvador, Uruguay, Paraguay, Bolivya, Venezuela, Panama, Kosta Rika ve birçok Latin Amerika ülkesine vizesiz gidilebilir.'
+  },
+  {
+    question: 'Türk pasaportuyla Azerbaycan\'a nasıl gidilir?',
+    answer: 'Türk vatandaşları Azerbaycan\'a hem pasaportla (30 gün vizesiz) hem de T.C. kimlik kartıyla giriş yapabilirler.'
+  },
+  {
+    question: 'Vizesiz ülkelerde çalışma izni var mı?',
+    answer: 'Hayır, vizesiz giriş sadece turistik amaçlı ziyaretler içindir. Çalışma izni için ayrı bir başvuru yapılması gerekmektedir.'
+  },
+  {
+    question: 'Vizesiz girişte pasaport süresi ne kadar olmalı?',
+    answer: 'Çoğu ülke, giriş tarihinde pasaportunuzun en az 6 ay geçerli olmasını şart koşar. Seyahat öncesi pasaport geçerlilik sürenizi kontrol edin.'
+  },
+  {
+    question: 'Türk pasaportu ile Gürcistan\'a kaç gün kalınabilir?',
+    answer: 'Türk pasaportu sahipleri Gürcistan\'a 365 gün (1 yıl) boyunca vizesiz kalabilir. Bu, en uzun vizesiz kalış sürelerinden biridir.'
+  },
+  {
+    question: 'Schengen bölgesine vizesiz giriş mümkün mü?',
+    answer: 'Hayır, Türk vatandaşlarının Schengen bölgesine giriş için Schengen vizesi alması gerekmektedir. Vize ücreti 80 EUR\'dur.'
+  },
+  {
+    question: 'Vizesiz ülkelerin listesi değişir mi?',
+    answer: 'Evet, vize politikaları değişebilir. Bu sayfadaki veriler düzenli olarak güncellenmektedir. Son güncelleme: ' + passportData.last_updated
+  }
+]);
+---
+
+<BaseLayout title={seo.title} description={seo.description} canonical={seo.canonical} ogImage={seo.ogImage} jsonLd={faqSchema}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <Breadcrumb items={[
+      { label: 'Ana Sayfa', href: '/' },
+      { label: 'Vizesiz Ülkeler' }
+    ]} />
+
+    <div class="mb-8">
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-3">
+        Türk Pasaportuyla Vizesiz Gidilebilen Ülkeler (2026)
+      </h1>
+      <p class="text-lg text-slate-600">
+        Toplam <strong class="text-green-600">{visaFreeCountries.length} ülkeye</strong> vizesiz giriş yapabilirsiniz.
+        Son güncelleme: {passportData.last_updated}
+      </p>
+    </div>
+
+    <div class="bg-green-50 border border-green-200 rounded-xl p-5 mb-8">
+      <p class="text-green-800 text-sm">
+        <strong>ℹ️ Bilgi:</strong> Vizesiz giriş, turistik amaçlı ziyaretler içindir. Çalışma veya eğitim amacıyla seyahat edecekseniz ilgili ülkenin vize türlerini araştırın. Pasaportunuzun en az 6 ay geçerli olduğundan emin olun.
+      </p>
+    </div>
+
+    <div class="mb-8">
+      <h2 class="text-xl font-bold text-slate-900 mb-4">Kıtaya Göre Vizesiz Ülkeler</h2>
+      {['europe', 'asia', 'africa', 'americas', 'oceania'].map(continent => {
+        const filtered = visaFreeCountries.filter(c => c.continent === continent);
+        if (filtered.length === 0) return null;
+        return (
+          <div class="mb-6">
+            <h3 class="text-lg font-bold text-slate-800 mb-3 flex items-center gap-2">
+              <span>{continentEmojis[continent]}</span>
+              {continentLabels[continent]} ({filtered.length} ülke)
+            </h3>
+            <div class="bg-white rounded-xl border border-slate-200 overflow-hidden">
+              <table class="w-full text-sm">
+                <thead class="bg-slate-50 border-b border-slate-200">
+                  <tr>
+                    <th class="text-left px-4 py-2 font-semibold text-slate-700" scope="col">Bayrak</th>
+                    <th class="text-left px-4 py-2 font-semibold text-slate-700" scope="col">Ülke</th>
+                    <th class="text-left px-4 py-2 font-semibold text-slate-700" scope="col">Kalış Süresi</th>
+                    <th class="text-left px-4 py-2 font-semibold text-slate-700" scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filtered.map(country => (
+                    <tr class="table-row border-b border-slate-100 last:border-0">
+                      <td class="px-4 py-3">
+                        <img src={country.flag_url} width="28" height="21" alt="" loading="lazy" class="rounded" />
+                      </td>
+                      <td class="px-4 py-3">
+                        <a href={`/ulkeler/${country.slug}`} class="font-medium text-slate-900 hover:text-primary transition-colors">
+                          {country.name_tr}
+                        </a>
+                      </td>
+                      <td class="px-4 py-3 text-slate-600">
+                        {country.max_stay_days ? `${country.max_stay_days} gün` : 'Belirtilmemiş'}
+                      </td>
+                      <td class="px-4 py-3">
+                        <a href={`/ulkeler/${country.slug}`} class="text-sm text-secondary hover:underline">Detay →</a>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+
+    <AdSenseSlot slot="ADSENSE_SLOT_VIZESISIZ_1" format="rectangle" />
+
+    <AffiliateBanner type="insurance" />
+
+    <div class="bg-white rounded-xl border border-slate-200 p-6 mt-8">
+      <h2 class="text-xl font-bold text-slate-900 mb-4">Sıkça Sorulan Sorular</h2>
+      <div class="space-y-4">
+        {[
+          { q: 'Türk pasaportuyla Avrupa\'ya vizesiz gidebilir miyim?', a: 'Hayır, Schengen bölgesi ülkelerine (Almanya, Fransa, İtalya vb.) vize gereklidir. Ancak Arnavutluk, Bosna Hersek, Sırbistan, Karadağ, Kuzey Makedonya, Moldova, Ukrayna ve Kosova\'ya vizesiz gidilebilir.' },
+          { q: 'En çok kaç gün kalınabilen vizesiz ülke hangisi?', a: 'Gürcistan 365 gün (1 yıl) ile en uzun vizesiz kalış süresini sunmaktadır. Peru 183 gün, Meksika ve Panama ise 180 gün kalış imkânı sunmaktadır.' },
+          { q: 'Türk pasaportuyla Japonya\'ya vizesiz gidilebilir mi?', a: 'Evet, Türk pasaportu sahipleri 2024 yılından itibaren Japonya\'ya 90 güne kadar vizesiz giriş yapabilmektedir.' },
+          { q: 'Latin Amerika\'ya vizesiz gidilebilir mi?', a: 'Evet, Brezilya, Arjantin, Şili, Kolombiya, Peru, Meksika, Ekvador, Uruguay, Paraguay, Bolivya, Venezuela, Panama, Kosta Rika ve birçok Latin Amerika ülkesine vizesiz gidilebilir.' },
+          { q: 'Türk pasaportuyla Azerbaycan\'a nasıl gidilir?', a: 'Türk vatandaşları Azerbaycan\'a hem pasaportla (30 gün vizesiz) hem de T.C. kimlik kartıyla giriş yapabilirler.' },
+          { q: 'Vizesiz ülkelerde çalışma izni var mı?', a: 'Hayır, vizesiz giriş sadece turistik amaçlı ziyaretler içindir. Çalışma izni için ayrı bir başvuru yapılması gerekmektedir.' },
+          { q: 'Vizesiz girişte pasaport süresi ne kadar olmalı?', a: 'Çoğu ülke, giriş tarihinde pasaportunuzun en az 6 ay geçerli olmasını şart koşar. Seyahat öncesi pasaport geçerlilik sürenizi kontrol edin.' },
+          { q: 'Türk pasaportu ile Gürcistan\'a kaç gün kalınabilir?', a: 'Türk pasaportu sahipleri Gürcistan\'a 365 gün (1 yıl) boyunca vizesiz kalabilir.' },
+          { q: 'Schengen bölgesine vizesiz giriş mümkün mü?', a: 'Hayır, Türk vatandaşlarının Schengen bölgesine giriş için Schengen vizesi alması gerekmektedir. Vize ücreti 80 EUR\'dur.' },
+          { q: 'Vizesiz ülkelerin listesi değişir mi?', a: `Evet, vize politikaları değişebilir. Bu sayfadaki veriler düzenli olarak güncellenmektedir. Son güncelleme: ${passportData.last_updated}` }
+        ].map(faq => (
+          <details class="group border border-slate-200 rounded-lg">
+            <summary class="cursor-pointer p-4 font-medium text-slate-900 hover:bg-slate-50 transition-colors list-none flex items-center justify-between">
+              {faq.q}
+              <svg class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="px-4 pb-4 text-sm text-slate-600 leading-relaxed">
+              {faq.a}
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </div>
+</BaseLayout>

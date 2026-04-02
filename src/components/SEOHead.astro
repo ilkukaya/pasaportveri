@@ -1,0 +1,35 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+  ogImage?: string;
+  ogType?: string;
+  jsonLd?: string;
+}
+
+const { title, description, canonical = 'https://pasaportveri.com/', ogImage = 'https://pasaportveri.com/og-image.png', ogType = 'website', jsonLd } = Astro.props;
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href={canonical} />
+
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:type" content={ogType} />
+<meta property="og:locale" content="tr_TR" />
+<meta property="og:site_name" content="Pasaport Veri" />
+<meta property="og:url" content={canonical} />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+
+{jsonLd && <script type="application/ld+json" set:html={jsonLd} />}
+
+<script is:inline src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-ADSENSE_PUB_ID" async crossorigin="anonymous"></script>
+<script is:inline defer data-domain="pasaportveri.com" src="https://plausible.io/js/script.js"></script>

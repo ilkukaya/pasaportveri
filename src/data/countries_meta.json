@@ -1,0 +1,758 @@
+{
+  "countries": {
+    "DE": {
+      "region": "Western Europe",
+      "sub_region": "Central Europe",
+      "calling_code": "+49",
+      "time_zones": [
+        "CET",
+        "CEST"
+      ],
+      "drives_on": "right",
+      "electrical_plug": "Type C, F",
+      "voltage": "230V",
+      "climate_tr": "Ilıman kıta iklimi",
+      "best_months_tr": [
+        "Nisan",
+        "Mayıs",
+        "Haziran",
+        "Eylül",
+        "Ekim"
+      ],
+      "seo_description_tr": "Türk pasaportuyla Almanya'ya giriş şartları, Schengen vizesi başvurusu, gerekli belgeler ve seyahat ipuçları. Almanya vize rehberi 2026.",
+      "popular_cities_tr": [
+        "Berlin",
+        "Münih",
+        "Hamburg",
+        "Frankfurt",
+        "Köln"
+      ],
+      "travel_tips_tr": [
+        "Euro bölgesindedir, nakit Euro bulundurun.",
+        "Toplu taşıma çok gelişmiştir, şehir içinde U-Bahn kullanın.",
+        "Eczaneler 'Apotheke' yazısıyla belirtilmiştir.",
+        "Pazar günleri çoğu dükkan kapalıdır."
+      ],
+      "affiliate_links": {
+        "hotel": "https://tp.media/click?shmarker=MARKER&promo_id=4132&source_type=customlink&type=click&custom_url=booking.com",
+        "insurance": "https://safetywing.com/nomad-insurance?referenceID=REFID",
+        "esim": "https://ref.airalo.com/REFID"
+      }
+    },
+    "FR": {
+      "region": "Western Europe",
+      "sub_region": "Western Europe",
+      "calling_code": "+33",
+      "time_zones": [
+        "CET",
+        "CEST"
+      ],
+      "drives_on": "right",
+      "electrical_plug": "Type C, E",
+      "voltage": "230V",
+      "climate_tr": "Ilıman okyanus iklimi",
+      "best_months_tr": [
+        "Nisan",
+        "Mayıs",
+        "Haziran",
+        "Eylül",
+        "Ekim"
+      ],
+      "seo_description_tr": "Türk pasaportuyla Fransa'ya giriş şartları, Schengen vizesi başvurusu, Paris ve diğer şehirler için seyahat rehberi.",
+      "popular_cities_tr": [
+        "Paris",
+        "Lyon",
+        "Marsilya",
+        "Nice",
+        "Bordeaux"
+      ],
+      "travel_tips_tr": [
+        "Müze kartları tasarruf sağlar (Paris Museum Pass).",
+        "Metro ağı çok geniştir, Navigo kart alın.",
+        "Restoranlarda bahşiş servis ücretine dahildir."
+      ],
+      "affiliate_links": {
+        "hotel": "https://tp.media/click?shmarker=MARKER&promo_id=4132&source_type=customlink&type=click&custom_url=booking.com",
+        "insurance": "https://safetywing.com/nomad-insurance?referenceID=REFID",
+        "esim": "https://ref.airalo.com/REFID"
+      }
+    },
+    "JP": {
+      "region": "Eastern Asia",
+      "sub_region": "Eastern Asia",
+      "calling_code": "+81",
+      "time_zones": [
+        "JST"
+      ],
+      "drives_on": "left",
+      "electrical_plug": "Type A, B",
+      "voltage": "100V",
+      "climate_tr": "Ilıman muson iklimi",
+      "best_months_tr": [
+        "Mart",
+        "Nisan",
+        "Mayıs",
+        "Ekim",
+        "Kasım"
+      ],
+      "seo_description_tr": "Türk pasaportuyla Japonya'ya vizesiz giriş. Japonya seyahat rehberi, Tokyo, Kyoto, Osaka ve diğer şehirler için ipuçları.",
+      "popular_cities_tr": [
+        "Tokyo",
+        "Kyoto",
+        "Osaka",
+        "Hiroşima",
+        "Nara"
+      ],
+      "travel_tips_tr": [
+        "JR Pass uzun mesafe tren yolculukları için ekonomiktir.",
+        "Suica/Pasmo kartları toplu taşıma ve alışverişte kullanılır.",
+        "Çoğu restoranda bahşiş beklenmez."
+      ],
+      "affiliate_links": {
+        "hotel": "https://tp.media/click?shmarker=MARKER&promo_id=4132&source_type=customlink&type=click&custom_url=booking.com",
+        "insurance": "https://safetywing.com/nomad-insurance?referenceID=REFID",
+        "esim": "https://ref.airalo.com/REFID"
+      }
+    },
+    "US": {
+      "region": "Northern America",
+      "sub_region": "Northern America",
+      "calling_code": "+1",
+      "time_zones": [
+        "EST",
+        "CST",
+        "MST",
+        "PST",
+        "AKST",
+        "HST"
+      ],
+      "drives_on": "right",
+      "electrical_plug": "Type A, B",
+      "voltage": "120V",
+      "climate_tr": "Çeşitli iklimler (kıtadan kıtaya değişir)",
+      "best_months_tr": [
+        "Nisan",
+        "Mayıs",
+        "Eylül",
+        "Ekim"
+      ],
+      "seo_description_tr": "Türk pasaportuyla ABD'ye vize başvurusu. B1/B2 turist vizesi, mülakat süreci, gerekli belgeler ve seyahat ipuçları.",
+      "popular_cities_tr": [
+        "New York",
+        "Los Angeles",
+        "Las Vegas",
+        "Miami",
+        "San Francisco"
+      ],
+      "travel_tips_tr": [
+        "ESTA Türk vatandaşları için geçerli değildir, B1/B2 vizesi gerekir.",
+        "Bahşiş kültürü yaygındır (%15-20).",
+        "Eyaletler arası uçuşlar en pratik ulaşım yoludur."
+      ],
+      "affiliate_links": {
+        "hotel": "https://tp.media/click?shmarker=MARKER&promo_id=4132&source_type=customlink&type=click&custom_url=booking.com",
+        "insurance": "https://safetywing.com/nomad-insurance?referenceID=REFID",
+        "esim": "https://ref.airalo.com/REFID"
+      }
+    },
+    "GB": {
+      "region": "Northern Europe",
+      "sub_region": "British Isles",
+      "calling_code": "+44",
+      "time_zones": [
+        "GMT",
+        "BST"
+      ],
+      "drives_on": "left",
+      "electrical_plug": "Type G",
+      "voltage": "230V",
+      "climate_tr": "Ilıman okyanus iklimi",
+      "best_months_tr": [
+        "Mayıs",
+        "Haziran",
+        "Temmuz",
+        "Ağustos",
+        "Eylül"
+      ],
+      "seo_description_tr": "Türk pasaportuyla İngiltere'ye vize başvurusu. Standart Ziyaretçi Vizesi, gerekli belgeler ve İngiltere seyahat rehberi.",
+      "popular_cities_tr": [
+        "Londra",
+        "Manchester",
+        "Edinburgh",
+        "Liverpool",
+        "Birmingham"
+      ],
+      "travel_tips_tr": [
+        "Oyster kart Londra'da toplu taşıma için en pratik seçenektir.",
+        "Schengen vizesi İngiltere için geçerli değildir.",
+        "Çay kültürü çok yaygındır."
+      ],
+      "affiliate_links": {
+        "hotel": "https://tp.media/click?shmarker=MARKER&promo_id=4132&source_type=customlink&type=click&custom_url=booking.com",
+        "insurance": "https://safetywing.com/nomad-insurance?referenceID=REFID",
+        "esim": "https://ref.airalo.com/REFID"
+      }
+    },
+    "TR": {
+      "region": "Western Asia",
+      "sub_region": "Anatolia",
+      "calling_code": "+90",
+      "time_zones": [
+        "TRT"
+      ],
+      "drives_on": "right",
+      "electrical_plug": "Type C, F",
+      "voltage": "230V",
+      "climate_tr": "Çeşitli iklimler (Akdeniz, Karadeniz, Karasal)",
+      "best_months_tr": [
+        "Nisan",
+        "Mayıs",
+        "Haziran",
+        "Eylül",
+        "Ekim"
+      ],
+      "seo_description_tr": "Türkiye seyahat bilgileri. Türk vatandaşları için kendi ülkelerinde seyahat.",
+      "popular_cities_tr": [
+        "İstanbul",
+        "Ankara",
+        "İzmir",
+        "Antalya",
+        "Kapadokya"
+      ],
+      "travel_tips_tr": [
+        "İstanbul Kart toplu taşıma için kullanılır.",
+        "Müzeler için MüzeKart avantajlıdır.",
+        "Kapadokya'da balon turu erken rezervasyon gerektirir."
+      ],
+      "affiliate_links": {
+        "hotel": "https://tp.media/click?shmarker=MARKER&promo_id=4132&source_type=customlink&type=click&custom_url=booking.com",
+        "insurance": "https://safetywing.com/nomad-insurance?referenceID=REFID",
+        "esim": "https://ref.airalo.com/REFID"
+      }
+    },
+    "TH": {
+      "region": "South-Eastern Asia",
+      "sub_region": "South-Eastern Asia",
+      "calling_code": "+66",
+      "time_zones": [
+        "ICT"
+      ],
+      "drives_on": "left",
+      "electrical_plug": "Type A, B, C",
+      "voltage": "220V",
+      "climate_tr": "Tropikal muson iklimi",
+      "best_months_tr": [
+        "Kasım",
+        "Aralık",
+        "Ocak",
+        "Şubat",
+        "Mart"
+      ],
+      "seo_description_tr": "Türk pasaportuyla Tayland'a vizesiz giriş. Bangkok, Phuket, Chiang Mai seyahat rehberi ve ipuçları.",
+      "popular_cities_tr": [
+        "Bangkok",
+        "Phuket",
+        "Chiang Mai",
+        "Pattaya",
+        "Krabi"
+      ],
+      "travel_tips_tr": [
+        "Tuk-tuk fiyatlarını önceden pazarlık edin.",
+        "Tapınak ziyaretlerinde diz ve omuzlarınızı kapatın.",
+        "Sokak yemekleri Tayland deneyiminin en önemli parçasıdır."
+      ],
+      "affiliate_links": {
+        "hotel": "https://tp.media/click?shmarker=MARKER&promo_id=4132&source_type=customlink&type=click&custom_url=booking.com",
+        "insurance": "https://safetywing.com/nomad-insurance?referenceID=REFID",
+        "esim": "https://ref.airalo.com/REFID"
+      }
+    },
+    "AE": {
+      "region": "Western Asia",
+      "sub_region": "Arabian Peninsula",
+      "calling_code": "+971",
+      "time_zones": [
+        "GST"
+      ],
+      "drives_on": "right",
+      "electrical_plug": "Type G",
+      "voltage": "230V",
+      "climate_tr": "Çöl iklimi",
+      "best_months_tr": [
+        "Kasım",
+        "Aralık",
+        "Ocak",
+        "Şubat",
+        "Mart"
+      ],
+      "seo_description_tr": "Türk pasaportuyla BAE'ye vizesiz giriş. Dubai, Abu Dabi seyahat rehberi, vize bilgileri ve ipuçları.",
+      "popular_cities_tr": [
+        "Dubai",
+        "Abu Dabi",
+        "Sharjah",
+        "Ajman"
+      ],
+      "travel_tips_tr": [
+        "Ramazan ayında halka açık yerlerde yemek yemekten kaçının.",
+        "Alkol sadece lisanslı mekanlarda sunulur.",
+        "Metro Dubai'de en pratik ulaşım aracıdır."
+      ],
+      "affiliate_links": {
+        "hotel": "https://tp.media/click?shmarker=MARKER&promo_id=4132&source_type=customlink&type=click&custom_url=booking.com",
+        "insurance": "https://safetywing.com/nomad-insurance?referenceID=REFID",
+        "esim": "https://ref.airalo.com/REFID"
+      }
+    },
+    "IT": {
+      "region": "Southern Europe",
+      "sub_region": "Southern Europe",
+      "calling_code": "+39",
+      "time_zones": [
+        "CET",
+        "CEST"
+      ],
+      "drives_on": "right",
+      "electrical_plug": "Type C, F, L",
+      "voltage": "230V",
+      "climate_tr": "Akdeniz iklimi",
+      "best_months_tr": [
+        "Nisan",
+        "Mayıs",
+        "Haziran",
+        "Eylül",
+        "Ekim"
+      ],
+      "seo_description_tr": "Türk pasaportuyla İtalya'ya giriş şartları, Schengen vizesi başvurusu. Roma, Venedik, Floransa, Milano seyahat rehberi.",
+      "popular_cities_tr": [
+        "Roma",
+        "Venedik",
+        "Floransa",
+        "Milano",
+        "Napoli"
+      ],
+      "travel_tips_tr": "['Colosseum ve Vatikan için online bilet alın.', 'İtalya'da öğle yemeği (pranzo) ana öğündür.', 'Şehirler arası yüksek hızlı tren (Frecciarossa) kullanın.']",
+      "affiliate_links": {
+        "hotel": "https://tp.media/click?shmarker=MARKER&promo_id=4132&source_type=customlink&type=click&custom_url=booking.com",
+        "insurance": "https://safetywing.com/nomad-insurance?referenceID=REFID",
+        "esim": "https://ref.airalo.com/REFID"
+      }
+    },
+    "ES": {
+      "region": "Southern Europe",
+      "sub_region": "Iberian Peninsula",
+      "calling_code": "+34",
+      "time_zones": [
+        "CET",
+        "CEST"
+      ],
+      "drives_on": "right",
+      "electrical_plug": "Type C, F",
+      "voltage": "230V",
+      "climate_tr": "Akdeniz iklimi",
+      "best_months_tr": [
+        "Nisan",
+        "Mayıs",
+        "Haziran",
+        "Eylül",
+        "Ekim"
+      ],
+      "seo_description_tr": "Türk pasaportuyla İspanya'ya giriş şartları, Schengen vizesi. Barselona, Madrid, Sevilla seyahat rehberi.",
+      "popular_cities_tr": [
+        "Barselona",
+        "Madrid",
+        "Sevilla",
+        "Valensiya",
+        "Granada"
+      ],
+      "travel_tips_tr": [
+        "Siesta saatlerinde (14:00-17:00) birçok dükkan kapalıdır.",
+        "Tapas kültürü İspanya'nın en önemli gastronomi deneyimidir.",
+        "AVE yüksek hızlı tren ağı şehreler arası ulaşımı kolaylaştırır."
+      ],
+      "affiliate_links": {
+        "hotel": "https://tp.media/click?shmarker=MARKER&promo_id=4132&source_type=customlink&type=click&custom_url=booking.com",
+        "insurance": "https://safetywing.com/nomad-insurance?referenceID=REFID",
+        "esim": "https://ref.airalo.com/REFID"
+      }
+    },
+    "GR": {
+      "region": "Southern Europe",
+      "sub_region": "Southern Europe",
+      "calling_code": "+30",
+      "time_zones": [
+        "EET",
+        "EEST"
+      ],
+      "drives_on": "right",
+      "electrical_plug": "Type C, F",
+      "voltage": "230V",
+      "climate_tr": "Akdeniz iklimi",
+      "best_months_tr": [
+        "Nisan",
+        "Mayıs",
+        "Haziran",
+        "Eylül",
+        "Ekim"
+      ],
+      "seo_description_tr": "Türk pasaportuyla Yunanistan'a Schengen vizesi ile giriş. Atina, Santorini, Mikonos seyahat rehberi.",
+      "popular_cities_tr": [
+        "Atina",
+        "Santorini",
+        "Mikonos",
+        "Selanik",
+        "Girit"
+      ],
+      "travel_tips_tr": [
+        "Schengen vizesi ile Yunan adalarına giriş yapılabilir.",
+        "Feribotlar adalar arası en yaygın ulaşım aracıdır.",
+        "Yunan mutfağı Türk mutfağına benzerlik gösterir."
+      ],
+      "affiliate_links": {
+        "hotel": "https://tp.media/click?shmarker=MARKER&promo_id=4132&source_type=customlink&type=click&custom_url=booking.com",
+        "insurance": "https://safetywing.com/nomad-insurance?referenceID=REFID",
+        "esim": "https://ref.airalo.com/REFID"
+      }
+    },
+    "EG": {
+      "region": "Northern Africa",
+      "sub_region": "Northern Africa",
+      "calling_code": "+20",
+      "time_zones": [
+        "EET"
+      ],
+      "drives_on": "right",
+      "electrical_plug": "Type C, F",
+      "voltage": "220V",
+      "climate_tr": "Çöl iklimi",
+      "best_months_tr": [
+        "Ekim",
+        "Kasım",
+        "Aralık",
+        "Ocak",
+        "Şubat",
+        "Mart"
+      ],
+      "seo_description_tr": "Türk pasaportuyla Mısır'a kapıda vize ile giriş. Kahire, Luksor, Hurghada seyahat rehberi ve vize bilgileri.",
+      "popular_cities_tr": [
+        "Kahire",
+        "Luksor",
+        "Hurghada",
+        "Şarm El-Şeyh",
+        "İskenderiye"
+      ],
+      "travel_tips_tr": [
+        "Kapıda vize $25 karşılığında alınabilir.",
+        "Pazarlık yapmak yaygın bir kültürdür.",
+        "Piramitler için erken saatte gidin, kalabalık az olur."
+      ],
+      "affiliate_links": {
+        "hotel": "https://tp.media/click?shmarker=MARKER&promo_id=4132&source_type=customlink&type=click&custom_url=booking.com",
+        "insurance": "https://safetywing.com/nomad-insurance?referenceID=REFID",
+        "esim": "https://ref.airalo.com/REFID"
+      }
+    },
+    "AZ": {
+      "region": "Western Asia",
+      "sub_region": "Caucasus",
+      "calling_code": "+994",
+      "time_zones": [
+        "AZT"
+      ],
+      "drives_on": "right",
+      "electrical_plug": "Type C, F",
+      "voltage": "230V",
+      "climate_tr": "Ilıman kara iklimi",
+      "best_months_tr": [
+        "Nisan",
+        "Mayıs",
+        "Haziran",
+        "Eylül",
+        "Ekim"
+      ],
+      "seo_description_tr": "Türk pasaportuyla Azerbaycan'a vizesiz giriş. Bakü, Gence seyahat rehberi. Kimlikle de girilebilir.",
+      "popular_cities_tr": [
+        "Bakü",
+        "Gence",
+        "Şeki",
+        "Lenkeran"
+      ],
+      "travel_tips_tr": [
+        "T.C. kimlik kartıyla da giriş yapılabilir.",
+        "Bakü'de Ateşgah ve Kız Kulesi görülmeye değer.",
+        "Azerbaycan mutfağı Türk mutfağına çok benzer."
+      ],
+      "affiliate_links": {
+        "hotel": "https://tp.media/click?shmarker=MARKER&promo_id=4132&source_type=customlink&type=click&custom_url=booking.com",
+        "insurance": "https://safetywing.com/nomad-insurance?referenceID=REFID",
+        "esim": "https://ref.airalo.com/REFID"
+      }
+    },
+    "GE": {
+      "region": "Western Asia",
+      "sub_region": "Caucasus",
+      "calling_code": "+995",
+      "time_zones": [
+        "GET"
+      ],
+      "drives_on": "right",
+      "electrical_plug": "Type C, F",
+      "voltage": "220V",
+      "climate_tr": "Ilıman kara iklimi",
+      "best_months_tr": [
+        "Mayıs",
+        "Haziran",
+        "Eylül",
+        "Ekim"
+      ],
+      "seo_description_tr": "Türk pasaportuyla Gürcistan'a vizesiz giriş. Tiflis, Batum seyahat rehberi. 365 güne kadar kalış imkânı.",
+      "popular_cities_tr": [
+        "Tiflis",
+        "Batum",
+        "Kutaisi",
+        "Kazbeki"
+      ],
+      "travel_tips_tr": [
+        "365 güne kadar vizesiz kalınabilir.",
+        "Gürcü mutfağı dünyaca ünlüdür (haçapuri, hinkali).",
+        "Marşrutka'lar şehirler arası en yaygın ulaşım aracıdır."
+      ],
+      "affiliate_links": {
+        "hotel": "https://tp.media/click?shmarker=MARKER&promo_id=4132&source_type=customlink&type=click&custom_url=booking.com",
+        "insurance": "https://safetywing.com/nomad-insurance?referenceID=REFID",
+        "esim": "https://ref.airalo.com/REFID"
+      }
+    },
+    "IN": {
+      "region": "Southern Asia",
+      "sub_region": "Southern Asia",
+      "calling_code": "+91",
+      "time_zones": [
+        "IST"
+      ],
+      "drives_on": "left",
+      "electrical_plug": "Type C, D, M",
+      "voltage": "230V",
+      "climate_tr": "Tropikal muson iklimi",
+      "best_months_tr": [
+        "Ekim",
+        "Kasım",
+        "Aralık",
+        "Ocak",
+        "Şubat",
+        "Mart"
+      ],
+      "seo_description_tr": "Türk pasaportuyla Hindistan'a e-vize başvurusu. Delhi, Mumbai, Taj Mahal seyahat rehberi ve vize bilgileri.",
+      "popular_cities_tr": [
+        "Delhi",
+        "Mumbai",
+        "Agra",
+        "Jaipur",
+        "Goa"
+      ],
+      "travel_tips_tr": [
+        "E-vize online olarak başvurulabilir ($25).",
+        "Bahşiş kültürü yaygındır.",
+        "Muson sezonunda (Haziran-Eylül) seyahat planlaması dikkatli yapılmalıdır."
+      ],
+      "affiliate_links": {
+        "hotel": "https://tp.media/click?shmarker=MARKER&promo_id=4132&source_type=customlink&type=click&custom_url=booking.com",
+        "insurance": "https://safetywing.com/nomad-insurance?referenceID=REFID",
+        "esim": "https://ref.airalo.com/REFID"
+      }
+    },
+    "BR": {
+      "region": "South America",
+      "sub_region": "South America",
+      "calling_code": "+55",
+      "time_zones": [
+        "BRT",
+        "AMT",
+        "ACT"
+      ],
+      "drives_on": "right",
+      "electrical_plug": "Type C, N",
+      "voltage": "127V/220V",
+      "climate_tr": "Tropikal iklim",
+      "best_months_tr": [
+        "Nisan",
+        "Mayıs",
+        "Haziran",
+        "Temmuz",
+        "Ağustos",
+        "Eylül"
+      ],
+      "seo_description_tr": "Türk pasaportuyla Brezilya'ya vizesiz giriş. Rio de Janeiro, São Paulo, Amazon seyahat rehberi.",
+      "popular_cities_tr": [
+        "Rio de Janeiro",
+        "São Paulo",
+        "Salvador",
+        "Brasilia"
+      ],
+      "travel_tips_tr": [
+        "90 güne kadar vizesiz kalınabilir, 90 gün daha uzatılabilir.",
+        "Karnaval döneminde (Şubat) konaklama erken rezerve edilmelidir.",
+        "Portekizce bilmek büyük avantaj sağlar."
+      ],
+      "affiliate_links": {
+        "hotel": "https://tp.media/click?shmarker=MARKER&promo_id=4132&source_type=customlink&type=click&custom_url=booking.com",
+        "insurance": "https://safetywing.com/nomad-insurance?referenceID=REFID",
+        "esim": "https://ref.airalo.com/REFID"
+      }
+    },
+    "MX": {
+      "region": "Central America",
+      "sub_region": "Central America",
+      "calling_code": "+52",
+      "time_zones": [
+        "CST",
+        "MST",
+        "PST"
+      ],
+      "drives_on": "right",
+      "electrical_plug": "Type A, B",
+      "voltage": "127V",
+      "climate_tr": "Tropikal ve çöl iklimi",
+      "best_months_tr": [
+        "Kasım",
+        "Aralık",
+        "Ocak",
+        "Şubat",
+        "Mart",
+        "Nisan"
+      ],
+      "seo_description_tr": "Türk pasaportuyla Meksika'ya vizesiz giriş. Cancun, Mexico City, Tulum seyahat rehberi. 180 güne kadar kalış.",
+      "popular_cities_tr": [
+        "Mexico City",
+        "Cancun",
+        "Tulum",
+        "Playa del Carmen",
+        "Guadalajara"
+      ],
+      "travel_tips_tr": [
+        "180 güne kadar vizesiz kalınabilir.",
+        "Peso cinsinden ödeme genellikle daha avantajlıdır.",
+        "Maya kalıntıları için erken saatte gidin."
+      ],
+      "affiliate_links": {
+        "hotel": "https://tp.media/click?shmarker=MARKER&promo_id=4132&source_type=customlink&type=click&custom_url=booking.com",
+        "insurance": "https://safetywing.com/nomad-insurance?referenceID=REFID",
+        "esim": "https://ref.airalo.com/REFID"
+      }
+    },
+    "RU": {
+      "region": "Eastern Europe",
+      "sub_region": "Eastern Europe",
+      "calling_code": "+7",
+      "time_zones": [
+        "MSK",
+        "YEKT",
+        "OMST",
+        "KRAT",
+        "IRKT",
+        "YAKT",
+        "VLAT",
+        "MAGT",
+        "PETT"
+      ],
+      "drives_on": "right",
+      "electrical_plug": "Type C, F",
+      "voltage": "220V",
+      "climate_tr": "Karasal iklim",
+      "best_months_tr": [
+        "Mayıs",
+        "Haziran",
+        "Temmuz",
+        "Ağustos",
+        "Eylül"
+      ],
+      "seo_description_tr": "Türk pasaportuyla Rusya'ya e-vize ile giriş. Moskova, St. Petersburg seyahat rehberi ve vize bilgileri.",
+      "popular_cities_tr": [
+        "Moskova",
+        "St. Petersburg",
+        "Soçi",
+        "Kazan"
+      ],
+      "travel_tips_tr": [
+        "E-vize ile 16 güne kadar kalınabilir.",
+        "Metro Moskova ve St. Petersburg'da en hızlı ulaşım aracıdır.",
+        "Yandex Taxi Rusya'da en yaygın taksi uygulamasıdır."
+      ],
+      "affiliate_links": {
+        "hotel": "https://tp.media/click?shmarker=MARKER&promo_id=4132&source_type=customlink&type=click&custom_url=booking.com",
+        "insurance": "https://safetywing.com/nomad-insurance?referenceID=REFID",
+        "esim": "https://ref.airalo.com/REFID"
+      }
+    },
+    "SA": {
+      "region": "Western Asia",
+      "sub_region": "Arabian Peninsula",
+      "calling_code": "+966",
+      "time_zones": [
+        "AST"
+      ],
+      "drives_on": "right",
+      "electrical_plug": "Type A, B, C, G",
+      "voltage": "127V/220V",
+      "climate_tr": "Çöl iklimi",
+      "best_months_tr": [
+        "Kasım",
+        "Aralık",
+        "Ocak",
+        "Şubat",
+        "Mart"
+      ],
+      "seo_description_tr": "Türk pasaportuyla Suudi Arabistan'a e-vize ile giriş. Mekke, Medine, Riyad seyahat rehberi.",
+      "popular_cities_tr": [
+        "Riyad",
+        "Cidde",
+        "Mekke",
+        "Medine"
+      ],
+      "travel_tips_tr": [
+        "Turist e-vizesi online olarak alınabilir.",
+        "Umre ve Hac için özel vize prosedürleri uygulanır.",
+        "Kadınlar için giyim kurallarına dikkat edilmelidir."
+      ],
+      "affiliate_links": {
+        "hotel": "https://tp.media/click?shmarker=MARKER&promo_id=4132&source_type=customlink&type=click&custom_url=booking.com",
+        "insurance": "https://safetywing.com/nomad-insurance?referenceID=REFID",
+        "esim": "https://ref.airalo.com/REFID"
+      }
+    },
+    "KR": {
+      "region": "Eastern Asia",
+      "sub_region": "Eastern Asia",
+      "calling_code": "+82",
+      "time_zones": [
+        "KST"
+      ],
+      "drives_on": "right",
+      "electrical_plug": "Type C, F",
+      "voltage": "220V",
+      "climate_tr": "Ilıman muson iklimi",
+      "best_months_tr": [
+        "Nisan",
+        "Mayıs",
+        "Eylül",
+        "Ekim"
+      ],
+      "seo_description_tr": "Türk pasaportuyla Güney Kore'ye vizesiz giriş. Seul, Busan, Jeju seyahat rehberi. K-ETA muafiyeti.",
+      "popular_cities_tr": [
+        "Seul",
+        "Busan",
+        "Jeju",
+        "Incheon"
+      ],
+      "travel_tips_tr": [
+        "K-ETA muafiyeti uygulanmaktadır.",
+        "T-money kartı toplu taşıma ve takside kullanılır.",
+        "Kore mutfağı dünyaca ünlüdür (kimchi, bibimbap)."
+      ],
+      "affiliate_links": {
+        "hotel": "https://tp.media/click?shmarker=MARKER&promo_id=4132&source_type=customlink&type=click&custom_url=booking.com",
+        "insurance": "https://safetywing.com/nomad-insurance?referenceID=REFID",
+        "esim": "https://ref.airalo.com/REFID"
+      }
+    }
+  }
+}

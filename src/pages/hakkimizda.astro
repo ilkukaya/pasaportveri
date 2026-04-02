@@ -1,0 +1,60 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import { generateCategoryMeta } from '../utils/seoHelpers';
+
+const seo = generateCategoryMeta('hakkimizda');
+---
+
+<BaseLayout title={seo.title} description={seo.description} canonical={seo.canonical} ogImage={seo.ogImage}>
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <Breadcrumb items={[
+      { label: 'Ana Sayfa', href: '/' },
+      { label: 'Hakkımızda' }
+    ]} />
+
+    <div class="mb-8">
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-3">
+        Hakkımızda
+      </h1>
+    </div>
+
+    <div class="bg-white rounded-xl border border-slate-200 p-6 sm:p-8 space-y-6 text-slate-700 leading-relaxed">
+      <p>
+        <strong>pasaportveri.com</strong>, Türk pasaportu sahiplerine yönelik kapsamlı bir vize ve seyahat bilgi platformudur.
+        Amacımız, Türk vatandaşlarının yurt dışı seyahat planlamasını kolaylaştırmak için güncel ve doğru vize bilgilerini
+        tek bir çatı altında sunmaktır.
+      </p>
+
+      <h2 class="text-xl font-bold text-slate-900">Misyonumuz</h2>
+      <p>
+        Türk pasaportu sahiplerinin dünya genelinde seyahat özgürlüğünü artırmak için şeffaf, güncel ve erişilebilir
+        vize bilgileri sağlamak. Her vatandaşın seyahat hakkını bilerek kullanması gerektiğine inanıyoruz.
+      </p>
+
+      <h2 class="text-xl font-bold text-slate-900">Veri Kaynaklarımız</h2>
+      <p>
+        Sitemizdeki vize bilgileri aşağıdaki güvenilir kaynaklardan derlenmektedir:
+      </p>
+      <ul class="list-disc list-inside space-y-1 ml-4">
+        <li>Henley Passport Index</li>
+        <li>Passport Index</li>
+        <li>İlgili ülke büyükelçiliklerinin resmi web siteleri</li>
+        <li>IATA Travel Centre</li>
+      </ul>
+      <p>
+        Verilerimiz haftalık olarak otomatik güncellenmektedir. Son güncelleme tarihini her sayfanın altında bulabilirsiniz.
+      </p>
+
+      <h2 class="text-xl font-bold text-slate-900">İletişim</h2>
+      <p>
+        Sorularınız, önerileriniz veya iş birliği talepleriniz için <a href="/iletisim" class="text-primary hover:underline">iletişim sayfamızı</a> kullanabilirsiniz.
+      </p>
+
+      <div class="bg-slate-50 border border-slate-200 rounded-lg p-4 text-sm text-slate-500">
+        <strong>Sorumluluk Reddi:</strong> Bu sitedeki bilgiler genel bilgilendirme amaçlıdır. Vize politikaları değişebilir.
+        Seyahat önceden ilgili ülke büyükelçiliğinden veya konsolosluğundan güncel bilgi almanız önemle tavsiye edilir.
+      </div>
+    </div>
+  </div>
+</BaseLayout>

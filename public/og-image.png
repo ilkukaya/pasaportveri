@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1B2A4A"/>
+      <stop offset="100%" style="stop-color:#0F1B33"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <text x="600" y="180" text-anchor="middle" font-family="system-ui" font-size="72" font-weight="800" fill="white">pasaportveri</text>
+  <text x="600" y="280" text-anchor="middle" font-family="system-ui" font-size="36" fill="#E30A17">Türk Pasaportuyla Kaç Ülkeye Girebilirsin?</text>
+  <rect x="300" y="340" width="150" height="100" rx="12" fill="#16A34A" opacity="0.9"/>
+  <text x="375" y="395" text-anchor="middle" font-family="system-ui" font-size="48" font-weight="800" fill="white">91</text>
+  <text x="375" y="425" text-anchor="middle" font-family="system-ui" font-size="16" fill="white" opacity="0.9">Vizesiz</text>
+  <rect x="475" y="340" width="150" height="100" rx="12" fill="#D97706" opacity="0.9"/>
+  <text x="550" y="395" text-anchor="middle" font-family="system-ui" font-size="48" font-weight="800" fill="white">23</text>
+  <text x="550" y="425" text-anchor="middle" font-family="system-ui" font-size="16" fill="white" opacity="0.9">Kapıda Vize</text>
+  <rect x="650" y="340" width="150" height="100" rx="12" fill="#2563EB" opacity="0.9"/>
+  <text x="725" y="395" text-anchor="middle" font-family="system-ui" font-size="48" font-weight="800" fill="white">23</text>
+  <text x="725" y="425" text-anchor="middle" font-family="system-ui" font-size="16" fill="white" opacity="0.9">E-Vize</text>
+  <rect x="825" y="340" width="75" height="100" rx="12" fill="#DC2626" opacity="0.9"/>
+  <text x="862" y="395" text-anchor="middle" font-family="system-ui" font-size="48" font-weight="800" fill="white">96</text>
+  <text x="862" y="425" text-anchor="middle" font-family="system-ui" font-size="16" fill="white" opacity="0.9">Vize Gerekli</text>
+  <text x="600" y="530" text-anchor="middle" font-family="system-ui" font-size="24" fill="#94A3B8">pasaportveri.com • 2026</text>
+</svg>

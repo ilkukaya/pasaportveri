@@ -1,0 +1,85 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import AffiliateBanner from '../components/AffiliateBanner.astro';
+import AdSenseSlot from '../components/AdSenseSlot.astro';
+import { sortCountries } from '../utils/visaHelpers';
+import { generateCategoryMeta } from '../utils/seoHelpers';
+
+import passportData from '../data/passport_data.json';
+
+const allCountries = passportData.countries;
+const visaRequiredCountries = sortCountries(
+  allCountries.filter(c => c.visa_status === 'visa_required'),
+  'name'
+);
+const seo = generateCategoryMeta('vize-gerekli');
+---
+
+<BaseLayout title={seo.title} description={seo.description} canonical={seo.canonical} ogImage={seo.ogImage}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <Breadcrumb items={[
+      { label: 'Ana Sayfa', href: '/' },
+      { label: 'Vize Gerekli' }
+    ]} />
+
+    <div class="mb-8">
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-3">
+        Türk Pasaportuyla Vize Gerekli Ülkeler (2026)
+      </h1>
+      <p class="text-lg text-slate-600">
+        Toplam <strong class="text-red-600">{visaRequiredCountries.length} ülkeye</strong> giriş için önceden vize almanız gerekmektedir.
+      </p>
+    </div>
+
+    <div class="bg-red-50 border border-red-200 rounded-xl p-5 mb-8">
+      <p class="text-red-800 text-sm">
+        <strong>⚠️ Dikkat:</strong> Bu ülkelere giriş yapabilmek için seyahat önceden vize almanız gerekmektedir. Vize başvurusu ilgili ülkenin büyükelçiliği veya yetkili vize başvuru merkezine (VFS Global, BLS International vb.) yapılır.
+      </p>
+    </div>
+
+    <div class="bg-white rounded-xl border border-slate-200 overflow-hidden mb-8">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-50 border-b border-slate-200">
+          <tr>
+            <th class="text-left px-4 py-3 font-semibold text-slate-700" scope="col">Bayrak</th>
+            <th class="text-left px-4 py-3 font-semibold text-slate-700" scope="col">Ülke</th>
+            <th class="text-left px-4 py-3 font-semibold text-slate-700 hidden sm:table-cell" scope="col">Vize Türü</th>
+            <th class="text-left px-4 py-3 font-semibold text-slate-700 hidden md:table-cell" scope="col">Ücret</th>
+            <th class="text-left px-4 py-3 font-semibold text-slate-700 hidden lg:table-cell" scope="col">İşlem Süresi</th>
+            <th class="text-left px-4 py-3 font-semibold text-slate-700" scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {visaRequiredCountries.map(country => (
+            <tr class="table-row border-b border-slate-100 last:border-0">
+              <td class="px-4 py-3">
+                <img src={country.flag_url} width="28" height="21" alt="" loading="lazy" class="rounded" />
+              </td>
+              <td class="px-4 py-3">
+                <a href={`/ulkeler/${country.slug}`} class="font-medium text-slate-900 hover:text-primary transition-colors">
+                  {country.name_tr}
+                </a>
+              </td>
+              <td class="px-4 py-3 text-slate-600 hidden sm:table-cell">
+                {country.visa_type_details}
+              </td>
+              <td class="px-4 py-3 text-slate-600 hidden md:table-cell">
+                {country.visa_fee_usd ? `$${country.visa_fee_usd}` : '-'}
+              </td>
+              <td class="px-4 py-3 text-slate-600 hidden lg:table-cell">
+                {country.processing_days ? `~${country.processing_days} gün` : '-'}
+              </td>
+              <td class="px-4 py-3">
+                <a href={`/ulkeler/${country.slug}`} class="text-sm text-secondary hover:underline">Detay →</a>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <AdSenseSlot slot="ADSENSE_SLOT_VIZEGEREKLİ_1" format="rectangle" />
+    <AffiliateBanner type="insurance" />
+  </div>
+</BaseLayout>

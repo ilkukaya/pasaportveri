@@ -1,0 +1,145 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import AffiliateBanner from '../components/AffiliateBanner.astro';
+import AdSenseSlot from '../components/AdSenseSlot.astro';
+import { generateCategoryMeta } from '../utils/seoHelpers';
+
+const seo = generateCategoryMeta('esim-rehberi');
+---
+
+<BaseLayout title={seo.title} description={seo.description} canonical={seo.canonical} ogImage={seo.ogImage}>
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <Breadcrumb items={[
+      { label: 'Ana Sayfa', href: '/' },
+      { label: 'eSIM Rehberi' }
+    ]} />
+
+    <div class="mb-8">
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-3">
+        Yurt Dışında İnternet: eSIM Rehberi 2026
+      </h1>
+      <p class="text-lg text-slate-600">
+        Yurt dışında internet için en pratik çözüm: eSIM. Nedir, nasıl kurulur, en uygun planlar hangileri?
+      </p>
+    </div>
+
+    <div class="bg-white rounded-xl border border-slate-200 p-6 mb-8">
+      <h2 class="text-xl font-bold text-slate-900 mb-4">eSIM Nedir?</h2>
+      <p class="text-sm text-slate-700 leading-relaxed mb-4">
+        eSIM (embedded SIM), telefonunuza fiziksel olarak takılan geleneksel SIM kartların dijital versiyonudur.
+        Telefonunuzun ayarlarından online olarak aktifleştirilir. Yurt dışı seyahatlerinde yerel operatörlerden
+        eSIM satın alarak yüksek roaming ücretleri ödemeden internete bağlanabilirsiniz.
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
+        <div class="bg-green-50 rounded-lg p-4 text-center">
+          <div class="text-3xl mb-2">⚡</div>
+          <div class="font-semibold text-slate-900">Anında Aktif</div>
+          <div class="text-xs text-slate-500 mt-1">Dakikalar içinde kurulum</div>
+        </div>
+        <div class="bg-blue-50 rounded-lg p-4 text-center">
+          <div class="text-3xl mb-2">💰</div>
+          <div class="font-semibold text-slate-900">Uygun Fiyat</div>
+          <div class="text-xs text-slate-500 mt-1">Roaming'den çok daha ucuz</div>
+        </div>
+        <div class="bg-amber-50 rounded-lg p-4 text-center">
+          <div class="text-3xl mb-2">🔄</div>
+          <div class="font-semibold text-slate-900">Çoklu Hat</div>
+          <div class="text-xs text-slate-500 mt-1">Ana numaranız aktif kalır</div>
+        </div>
+      </div>
+    </div>
+
+    <AffiliateBanner type="esim" />
+
+    <div class="bg-white rounded-xl border border-slate-200 p-6 mb-8">
+      <h2 class="text-xl font-bold text-slate-900 mb-4">Popüler Bölgeler için eSIM Planları</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead class="bg-slate-50 border-b border-slate-200">
+            <tr>
+              <th class="text-left px-4 py-3 font-semibold text-slate-700" scope="col">Bölge</th>
+              <th class="text-left px-4 py-3 font-semibold text-slate-700" scope="col">Veri</th>
+              <th class="text-left px-4 py-3 font-semibold text-slate-700" scope="col">Süre</th>
+              <th class="text-left px-4 py-3 font-semibold text-slate-700" scope="col">Tahmini Fiyat</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b border-slate-100">
+              <td class="px-4 py-3">Avrupa (33 ülke)</td>
+              <td class="px-4 py-3">1 GB</td>
+              <td class="px-4 py-3">7 gün</td>
+              <td class="px-4 py-3">~$5</td>
+            </tr>
+            <tr class="border-b border-slate-100">
+              <td class="px-4 py-3">Avrupa (33 ülke)</td>
+              <td class="px-4 py-3">5 GB</td>
+              <td class="px-4 py-3">30 gün</td>
+              <td class="px-4 py-3">~$13</td>
+            </tr>
+            <tr class="border-b border-slate-100">
+              <td class="px-4 py-3">ABD</td>
+              <td class="px-4 py-3">3 GB</td>
+              <td class="px-4 py-3">30 gün</td>
+              <td class="px-4 py-3">~$10</td>
+            </tr>
+            <tr class="border-b border-slate-100">
+              <td class="px-4 py-3">Japonya</td>
+              <td class="px-4 py-3">3 GB</td>
+              <td class="px-4 py-3">30 gün</td>
+              <td class="px-4 py-3">~$8</td>
+            </tr>
+            <tr class="border-b border-slate-100">
+              <td class="px-4 py-3">Tayland</td>
+              <td class="px-4 py-3">5 GB</td>
+              <td class="px-4 py-3">15 gün</td>
+              <td class="px-4 py-3">~$8</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-3">Global (130+ ülke)</td>
+              <td class="px-4 py-3">1 GB</td>
+              <td class="px-4 py-3">7 gün</td>
+              <td class="px-4 py-3">~$9</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-xl border border-slate-200 p-6 mb-8">
+      <h2 class="text-xl font-bold text-slate-900 mb-4">eSIM Nasıl Kurulur?</h2>
+      <ol class="space-y-4 text-sm text-slate-700">
+        <li class="flex items-start gap-3">
+          <span class="flex-shrink-0 w-7 h-7 bg-secondary text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
+          <div>
+            <strong class="text-slate-900">Telefonunuzun eSIM destekleyip desteklemediğini kontrol edin.</strong>
+            <p class="text-slate-500 mt-1">iPhone XS ve sonrası, Samsung Galaxy S20 ve sonrası, Google Pixel 3 ve sonrası cihazlar eSIM destekler.</p>
+          </div>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="flex-shrink-0 w-7 h-7 bg-secondary text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
+          <div>
+            <strong class="text-slate-900">Gideceğiniz ülke için uygun eSIM planını seçin.</strong>
+            <p class="text-slate-500 mt-1">Veri miktarı ve geçerlilik süresini ihtiyacınıza göre belirleyin.</p>
+          </div>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="flex-shrink-0 w-7 h-7 bg-secondary text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
+          <div>
+            <strong class="text-slate-900">Satın alın ve QR kodu tarayın.</strong>
+            <p class="text-slate-500 mt-1">QR kodu telefonunuzun Ayarlar > Hücresel > eSIM Ekle bölümünden tarayın.</p>
+          </div>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="flex-shrink-0 w-7 h-7 bg-secondary text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
+          <div>
+            <strong class="text-slate-900">Seyahat sırasında eSIM'i aktif edin.</strong>
+            <p class="text-slate-500 mt-1">Hücresel veriyi eSIM hattına yönlendirin. Ana numaranız aktif kalır (arama/SMS için).</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+
+    <AdSenseSlot slot="ADSENSE_SLOT_ESIM_1" format="rectangle" />
+  </div>
+</BaseLayout>

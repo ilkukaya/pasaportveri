@@ -1,0 +1,96 @@
+---
+interface Props {
+  currentContinent?: string;
+  currentVisaStatus?: string;
+  counts?: {
+    visa_free: number;
+    visa_on_arrival: number;
+    e_visa: number;
+    visa_required: number;
+  };
+}
+
+const { currentContinent = 'all', currentVisaStatus = 'all', counts } = Astro.props;
+
+const continents = [
+  { key: 'all', label: 'Tümü', emoji: '🌐' },
+  { key: 'europe', label: 'Avrupa', emoji: '🌍' },
+  { key: 'asia', label: 'Asya', emoji: '🌏' },
+  { key: 'africa', label: 'Afrika', emoji: '🌍' },
+  { key: 'americas', label: 'Amerika', emoji: '🌎' },
+  { key: 'oceania', label: 'Okyanusya', emoji: '🌏' },
+];
+
+const visaStatuses = [
+  { key: 'all', label: 'Tümü', color: 'bg-slate-600' },
+  { key: 'visa_free', label: 'Vizesiz', color: 'bg-green-500' },
+  { key: 'visa_on_arrival', label: 'Kapıda Vize', color: 'bg-amber-500' },
+  { key: 'e_visa', label: 'E-Vize', color: 'bg-blue-500' },
+  { key: 'visa_required', label: 'Vize Gerekli', color: 'bg-red-500' },
+];
+---
+
+<div class="space-y-3">
+  <div class="flex flex-wrap gap-2 overflow-x-auto pb-1" role="tablist" aria-label="Kıta filtresi">
+    {continents.map(c => (
+      <button
+        class={`filter-btn ${currentContinent === c.key ? 'active' : ''}`}
+        data-continent={c.key}
+        role="tab"
+        aria-selected={currentContinent === c.key}
+      >
+        {c.emoji} {c.label}
+      </button>
+    ))}
+  </div>
+  <div class="flex flex-wrap gap-2 overflow-x-auto pb-1" role="tablist" aria-label="Vize durumu filtresi">
+    {visaStatuses.map(v => (
+      <button
+        class={`filter-btn ${currentVisaStatus === v.key ? 'active' : ''}`}
+        data-visa-status={v.key}
+        role="tab"
+        aria-selected={currentVisaStatus === v.key}
+      >
+        <span class={`inline-block w-2 h-2 rounded-full ${v.color} mr-1`}></span>
+        {v.label}
+        {counts && counts[v.key as keyof typeof counts] !== undefined && counts[v.key as keyof typeof counts] !== undefined
+          ? ` (${counts[v.key as keyof typeof counts]})`
+          : ''}
+      </button>
+    ))}
+  </div>
+</div>
+
+<script>
+  let activeContinent = 'all';
+  let activeVisaStatus = 'all';
+
+  function filterTable() {
+    const rows = document.querySelectorAll('#country-table-body tr');
+    rows.forEach(row => {
+      const continent = (row as HTMLElement).dataset.continent || '';
+      const visaStatus = (row as HTMLElement).dataset.visaStatus || '';
+      const matchContinent = activeContinent === 'all' || continent === activeContinent;
+      const matchVisa = activeVisaStatus === 'all' || visaStatus === activeVisaStatus;
+      (row as HTMLElement).style.display = (matchContinent && matchVisa) ? '' : 'none';
+    });
+  }
+
+  document.querySelectorAll('[data-continent]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('[data-continent]').forEach(b => b.classList.remove('active'));
+      (btn as HTMLElement).classList.add('active');
+      activeContinent = (btn as HTMLElement).dataset.continent || 'all';
+      filterTable();
+    });
+  });
+
+  document.querySelectorAll('[data-visa-status]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('[data-visa-status]').forEach(b => b.classList.remove('active'));
+      (btn as HTMLElement).classList.add('active');
+      activeVisaStatus = (btn as HTMLElement).dataset.visaStatus || 'all';
+      filterTable();
+    });
+  });
+</script>

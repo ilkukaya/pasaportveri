@@ -1,0 +1,74 @@
+---
+interface Props {
+  henleyRank: number;
+  passportIndexRank: number;
+  visaFreeCount: number;
+  visaOnArrivalCount: number;
+  eVisaCount: number;
+  visaRequiredCount: number;
+  totalDestinations: number;
+}
+
+const { henleyRank, passportIndexRank, visaFreeCount, visaOnArrivalCount, eVisaCount, visaRequiredCount, totalDestinations } = Astro.props;
+---
+
+<div class="bg-white rounded-xl border border-slate-200 p-6">
+  <div class="flex items-center gap-3 mb-4">
+    <span class="text-3xl">🇹🇷</span>
+    <div>
+      <h2 class="text-lg font-bold text-slate-900">Türk Pasaportu Gücü</h2>
+      <p class="text-sm text-slate-500">Henley Sıralaması #{henleyRank}</p>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+    <div class="text-center p-3 bg-green-50 rounded-lg">
+      <div class="text-2xl font-extrabold text-green-600">{visaFreeCount}</div>
+      <div class="text-xs text-green-700 font-medium mt-1">Vizesiz</div>
+    </div>
+    <div class="text-center p-3 bg-amber-50 rounded-lg">
+      <div class="text-2xl font-extrabold text-amber-600">{visaOnArrivalCount}</div>
+      <div class="text-xs text-amber-700 font-medium mt-1">Kapıda Vize</div>
+    </div>
+    <div class="text-center p-3 bg-blue-50 rounded-lg">
+      <div class="text-2xl font-extrabold text-blue-600">{eVisaCount}</div>
+      <div class="text-xs text-blue-700 font-medium mt-1">E-Vize</div>
+    </div>
+    <div class="text-center p-3 bg-red-50 rounded-lg">
+      <div class="text-2xl font-extrabold text-red-600">{visaRequiredCount}</div>
+      <div class="text-xs text-red-700 font-medium mt-1">Vize Gerekli</div>
+    </div>
+  </div>
+
+  <div class="space-y-3">
+    <div>
+      <div class="flex justify-between text-sm mb-1">
+        <span class="text-slate-600">Erişilebilir Destinasyon</span>
+        <span class="font-semibold text-slate-900">{visaFreeCount + visaOnArrivalCount + eVisaCount} / {totalDestinations}</span>
+      </div>
+      <div class="w-full bg-slate-200 rounded-full h-3 overflow-hidden">
+        <div
+          class="h-full bg-gradient-to-r from-green-500 via-amber-500 to-blue-500 rounded-full transition-all duration-1000"
+          style={`width: ${Math.round(((visaFreeCount + visaOnArrivalCount + eVisaCount) / totalDestinations) * 100)}%`}
+        ></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="flex justify-between text-sm mb-1">
+        <span class="text-slate-600">Henley Sıralaması</span>
+        <span class="font-semibold text-slate-900">#{henleyRank}</span>
+      </div>
+      <div class="w-full bg-slate-200 rounded-full h-3 overflow-hidden">
+        <div
+          class="h-full bg-secondary rounded-full transition-all duration-1000"
+          style={`width: ${Math.round((1 - (henleyRank - 1) / 106) * 100)}%`}
+        ></div>
+      </div>
+      <div class="flex justify-between text-xs text-slate-400 mt-1">
+        <span>#1 (194 ülke)</span>
+        <span>#107</span>
+      </div>
+    </div>
+  </div>
+</div>

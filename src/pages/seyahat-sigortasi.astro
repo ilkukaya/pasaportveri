@@ -1,0 +1,118 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import AffiliateBanner from '../components/AffiliateBanner.astro';
+import AdSenseSlot from '../components/AdSenseSlot.astro';
+import { generateCategoryMeta } from '../utils/seoHelpers';
+
+const seo = generateCategoryMeta('seyahat-sigortasi');
+---
+
+<BaseLayout title={seo.title} description={seo.description} canonical={seo.canonical} ogImage={seo.ogImage}>
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <Breadcrumb items={[
+      { label: 'Ana Sayfa', href: '/' },
+      { label: 'Seyahat Sigortası' }
+    ]} />
+
+    <div class="mb-8">
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-3">
+        Seyahat Sigortası Rehberi 2026
+      </h1>
+      <p class="text-lg text-slate-600">
+        Yurt dışı seyahatinizde güvende olun. Neden seyahat sigortası gerekli, ne kadar maliyetli ve nasıl alınır?
+      </p>
+    </div>
+
+    <div class="bg-white rounded-xl border border-slate-200 p-6 mb-8">
+      <h2 class="text-xl font-bold text-slate-900 mb-4">Neden Seyahat Sigortası Gerekli?</h2>
+      <div class="space-y-4 text-sm text-slate-700">
+        <p>
+          Seyahat sigortası, yurt dışında karşılaşabileceğiniz beklenmedik sağlık sorunları, uçuş iptalleri,
+          bagaj kaybı ve diğer risklere karşı sizi korur. Özellikle Schengen vizesi başvurularında seyahat
+          sigortası <strong>zorunludur</strong> (minimum 30.000 EUR teminat).
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
+          <div class="bg-green-50 rounded-lg p-4 text-center">
+            <div class="text-3xl mb-2">🏥</div>
+            <div class="font-semibold text-slate-900">Sağlık</div>
+            <div class="text-xs text-slate-500 mt-1">Hastane ve doktor masrafları</div>
+          </div>
+          <div class="bg-blue-50 rounded-lg p-4 text-center">
+            <div class="text-3xl mb-2">✈️</div>
+            <div class="font-semibold text-slate-900">Uçuş İptali</div>
+            <div class="text-xs text-slate-500 mt-1">İptal ve gecikme teminatı</div>
+          </div>
+          <div class="bg-amber-50 rounded-lg p-4 text-center">
+            <div class="text-3xl mb-2">🧳</div>
+            <div class="font-semibold text-slate-900">Bagaj Kaybı</div>
+            <div class="text-xs text-slate-500 mt-1">Kayıp ve çalıntı eşya</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <AffiliateBanner type="insurance" />
+
+    <div class="bg-white rounded-xl border border-slate-200 p-6 mb-8">
+      <h2 class="text-xl font-bold text-slate-900 mb-4">Seyahat Sigortası Fiyatları</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead class="bg-slate-50 border-b border-slate-200">
+            <tr>
+              <th class="text-left px-4 py-3 font-semibold text-slate-700" scope="col">Süre</th>
+              <th class="text-left px-4 py-3 font-semibold text-slate-700" scope="col">Tahmini Fiyat</th>
+              <th class="text-left px-4 py-3 font-semibold text-slate-700" scope="col">Teminat</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b border-slate-100">
+              <td class="px-4 py-3">1-7 gün</td>
+              <td class="px-4 py-3">$15 - $30</td>
+              <td class="px-4 py-3">30.000 EUR+</td>
+            </tr>
+            <tr class="border-b border-slate-100">
+              <td class="px-4 py-3">1-4 hafta</td>
+              <td class="px-4 py-3">$30 - $60</td>
+              <td class="px-4 py-3">30.000 EUR+</td>
+            </tr>
+            <tr class="border-b border-slate-100">
+              <td class="px-4 py-3">1-3 ay</td>
+              <td class="px-4 py-3">$60 - $150</td>
+              <td class="px-4 py-3">30.000 EUR+</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-3">Yıllık (çoklu seyahat)</td>
+              <td class="px-4 py-3">$200 - $500</td>
+              <td class="px-4 py-3">30.000 EUR+</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-xl border border-slate-200 p-6 mb-8">
+      <h2 class="text-xl font-bold text-slate-900 mb-4">Sıkça Sorulan Sorular</h2>
+      <div class="space-y-4">
+        {[
+          { q: 'Schengen vizesi için sigorta zorunlu mu?', a: 'Evet, Schengen vizesi başvurularında minimum 30.000 EUR teminatlı seyahat sigortası zorunludur.' },
+          { q: 'Seyahat sigortası neleri kapsar?', a: 'Genellikle sağlık masrafları, hastane yatışı, acil tıbbi nakil, uçuş iptali, bagaj kaybı ve gecikmesi teminatları bulunur.' },
+          { q: 'Online sigorta alabilir miyim?', a: 'Evet, birçok şirket online olarak seyahat sigortası sunmaktadır. Poliçeniz e-posta ile gönderilir.' },
+          { q: 'Mevcut hastalıklar sigorta kapsamında mı?', a: 'Çoğu standart poliçe mevcut hastalıkları kapsamaz. Özel poliçe için sigorta şirketiyle görüşün.' }
+        ].map(faq => (
+          <details class="group border border-slate-200 rounded-lg">
+            <summary class="cursor-pointer p-4 font-medium text-slate-900 hover:bg-slate-50 transition-colors list-none flex items-center justify-between">
+              {faq.q}
+              <svg class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="px-4 pb-4 text-sm text-slate-600 leading-relaxed">{faq.a}</div>
+          </details>
+        ))}
+      </div>
+    </div>
+
+    <AdSenseSlot slot="ADSENSE_SLOT_SIGORTA_1" format="rectangle" />
+  </div>
+</BaseLayout>

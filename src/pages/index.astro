@@ -1,0 +1,154 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SearchBar from '../components/SearchBar.astro';
+import CountryTable from '../components/CountryTable.astro';
+import FilterBar from '../components/FilterBar.astro';
+import PassportRankWidget from '../components/PassportRankWidget.astro';
+import AdSenseSlot from '../components/AdSenseSlot.astro';
+import AffiliateBanner from '../components/AffiliateBanner.astro';
+import { sortCountries, getVisaStatusCounts } from '../utils/visaHelpers';
+import { getPopularCountries, getContinents } from '../utils/countryHelpers';
+import { generateIndexMeta, generateWebsiteSchema } from '../utils/seoHelpers';
+
+import passportData from '../data/passport_data.json';
+
+const countries = passportData.countries;
+const tp = passportData.turkish_passport;
+const counts = getVisaStatusCounts(countries);
+const sortedCountries = sortCountries(countries, 'status');
+const popularCountries = getPopularCountries(countries);
+const continents = getContinents(countries);
+
+const popularDestinations = [
+  countries.find(c => c.code === 'JP')!,
+  countries.find(c => c.code === 'AE')!,
+  countries.find(c => c.code === 'US')!,
+  countries.find(c => c.code === 'GB')!,
+  countries.find(c => c.code === 'TH')!,
+  countries.find(c => c.code === 'GR')!,
+].filter(Boolean);
+
+const seo = generateIndexMeta();
+const jsonLd = generateWebsiteSchema();
+---
+
+<BaseLayout title={seo.title} description={seo.description} canonical={seo.canonical} ogImage={seo.ogImage} jsonLd={jsonLd}>
+  <section class="bg-gradient-to-br from-secondary to-slate-900 text-white py-16 sm:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight mb-4">
+        Türk Pasaportuyla Kaç Ülkeye Girebilirsin?
+      </h1>
+      <p class="text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto mb-8">
+        2026 itibarıyla <strong class="text-green-400">{counts.visa_free} ülkeye vizesiz</strong>, <strong class="text-amber-400">{counts.visa_on_arrival} ülkeye kapıda vize</strong> ile girilebiliyor.
+      </p>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-3xl mx-auto mb-8">
+        <div class="stat-card bg-white/10 backdrop-blur-sm border border-white/20">
+          <div class="stat-number text-green-400">{counts.visa_free}</div>
+          <div class="text-sm text-slate-300 font-medium">Vizesiz</div>
+        </div>
+        <div class="stat-card bg-white/10 backdrop-blur-sm border border-white/20">
+          <div class="stat-number text-amber-400">{counts.visa_on_arrival}</div>
+          <div class="text-sm text-slate-300 font-medium">Kapıda Vize</div>
+        </div>
+        <div class="stat-card bg-white/10 backdrop-blur-sm border border-white/20">
+          <div class="stat-number text-blue-400">{counts.e_visa}</div>
+          <div class="text-sm text-slate-300 font-medium">E-Vize</div>
+        </div>
+        <div class="stat-card bg-white/10 backdrop-blur-sm border border-white/20">
+          <div class="stat-number text-red-400">{counts.visa_required}</div>
+          <div class="text-sm text-slate-300 font-medium">Vize Gerekli</div>
+        </div>
+      </div>
+
+      <SearchBar />
+
+      <div class="mt-6">
+        <a href="/vizesiz-ulkeler" class="inline-flex items-center px-6 py-3 bg-primary hover:bg-red-700 text-white font-semibold rounded-lg transition-colors">
+          Tüm Ülkeleri Gör →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <FilterBar counts={counts} />
+  </section>
+
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-10">
+    <CountryTable countries={sortedCountries} />
+  </section>
+
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <PassportRankWidget
+      henleyRank={tp.rank_henley}
+      passportIndexRank={tp.rank_passport_index}
+      visaFreeCount={tp.visa_free_count}
+      visaOnArrivalCount={tp.visa_on_arrival_count}
+      eVisaCount={tp.e_visa_count}
+      visaRequiredCount={tp.visa_required_count}
+      totalDestinations={tp.total_destinations}
+    />
+  </section>
+
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <h2 class="text-2xl font-bold text-slate-900 mb-6">Popüler Destinasyonlar</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {popularDestinations.map(country => (
+        <a
+          href={`/ulkeler/${country.slug}`}
+          class="country-card bg-white rounded-xl border border-slate-200 p-5 hover:border-slate-300 block"
+        >
+          <div class="flex items-center gap-3 mb-3">
+            <img
+              src={country.flag_url}
+              srcset={`${country.flag_url.replace('w80', 'w160')} 2x`}
+              width="40"
+              height="30"
+              alt={`${country.name_tr} bayrağı`}
+              loading="lazy"
+              class="rounded shadow-sm"
+            />
+            <div>
+              <h3 class="font-semibold text-slate-900">{country.name_tr}</h3>
+              <span class={`visa-badge ${country.visa_status}`}>{country.visa_status_tr}</span>
+            </div>
+          </div>
+          <p class="text-sm text-slate-500">{country.notes_tr?.substring(0, 100)}...</p>
+          <span class="inline-block mt-3 text-sm font-medium text-secondary hover:underline">İncele →</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <AdSenseSlot slot="ADSENSE_SLOT_INDEX_1" format="leaderboard" fullWidth />
+
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <h2 class="text-2xl font-bold text-slate-900 mb-6">Hızlı Araçlar</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <a href="/kac-gun-kalabilirim" class="country-card bg-white rounded-xl border border-slate-200 p-6 hover:border-slate-300 block text-center">
+        <div class="text-4xl mb-3">📅</div>
+        <h3 class="font-bold text-slate-900 mb-2">Kaç Gün Kalabilirim?</h3>
+        <p class="text-sm text-slate-500">Schengen 90/180 kuralı ve ülke bazlı kalış süresi hesaplama</p>
+      </a>
+      <a href="/pasaport-karsilastir" class="country-card bg-white rounded-xl border border-slate-200 p-6 hover:border-slate-300 block text-center">
+        <div class="text-4xl mb-3">⚖️</div>
+        <h3 class="font-bold text-slate-900 mb-2">Pasaport Karşılaştır</h3>
+        <p class="text-sm text-slate-500">İki pasaportu yan yana karşılaştırın</p>
+      </a>
+      <a href="/seyahat-sigortasi" class="country-card bg-white rounded-xl border border-slate-200 p-6 hover:border-slate-300 block text-center">
+        <div class="text-4xl mb-3">🛡️</div>
+        <h3 class="font-bold text-slate-900 mb-2">Seyahat Sigortası</h3>
+        <p class="text-sm text-slate-500">En uygun seyahat sigortası seçenekleri</p>
+      </a>
+    </div>
+  </section>
+
+  <AffiliateBanner type="insurance" />
+
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 border-t border-slate-200">
+    <p class="text-sm text-slate-500 text-center">
+      Son güncelleme: {passportData.last_updated} | Kaynak: {passportData.source}
+    </p>
+  </section>
+</BaseLayout>

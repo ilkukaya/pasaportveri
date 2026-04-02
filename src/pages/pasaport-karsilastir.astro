@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import PassportComparator from '../components/PassportComparator.astro';
+import AdSenseSlot from '../components/AdSenseSlot.astro';
+import { generateCategoryMeta } from '../utils/seoHelpers';
+
+const seo = generateCategoryMeta('pasaport-karsilastir');
+---
+
+<BaseLayout title={seo.title} description={seo.description} canonical={seo.canonical} ogImage={seo.ogImage}>
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <Breadcrumb items={[
+      { label: 'Ana Sayfa', href: '/' },
+      { label: 'Pasaport Karşılaştır' }
+    ]} />
+
+    <div class="mb-8">
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-3">
+        Pasaport Karşılaştır
+      </h1>
+      <p class="text-lg text-slate-600">
+        İki pasaportu yan yana karşılaştırın. Hangi pasaport daha güçlü?
+      </p>
+    </div>
+
+    <PassportComparator />
+
+    <div class="bg-white rounded-xl border border-slate-200 p-6 mt-8">
+      <h2 class="text-lg font-bold text-slate-900 mb-4">Neden Pasaport Karşılaştırma?</h2>
+      <ul class="space-y-3 text-sm text-slate-700">
+        <li class="flex items-start gap-2">
+          <span class="text-secondary font-bold mt-0.5">•</span>
+          <span>Çifte vatandaşlığınız varsa hangi pasaportla seyahat etmeniz gerektiğini belirleyin.</span>
+        </li>
+        <li class="flex items-start gap-2">
+          <span class="text-secondary font-bold mt-0.5">•</span>
+          <span>İş ortaklarınızın veya aile üyelerinizin pasaport gücünü karşılaştırın.</span>
+        </li>
+        <li class="flex items-start gap-2">
+          <span class="text-secondary font-bold mt-0.5">•</span>
+          <span>Yatırımcı vatandaşlık programlarını değerlendirirken pasaport gücünü karşılaştırın.</span>
+        </li>
+      </ul>
+    </div>
+
+    <AdSenseSlot slot="ADSENSE_SLOT_KARSILASTIR_1" format="rectangle" />
+  </div>
+</BaseLayout>

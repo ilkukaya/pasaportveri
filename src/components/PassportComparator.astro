@@ -1,0 +1,150 @@
+---
+---
+
+<div class="bg-white rounded-xl border border-slate-200 p-6" id="passport-comparator">
+  <h2 class="text-xl font-bold text-slate-900 mb-2">Pasaport Karşılaştır</h2>
+  <p class="text-sm text-slate-500 mb-6">İki pasaportu yan yana karşılaştırın. Hangi pasaport daha güçlü?</p>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+    <div>
+      <label for="compare-1" class="block text-sm font-medium text-slate-700 mb-1">1. Pasaport</label>
+      <select id="compare-1" class="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-secondary focus:border-secondary">
+        <option value="TR">🇹🇷 Türkiye</option>
+      </select>
+    </div>
+    <div>
+      <label for="compare-2" class="block text-sm font-medium text-slate-700 mb-1">2. Pasaport</label>
+      <select id="compare-2" class="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-secondary focus:border-secondary">
+        <option value="DE">🇩🇪 Almanya</option>
+      </select>
+    </div>
+  </div>
+
+  <button id="compare-btn" class="w-full bg-secondary text-white py-2.5 rounded-lg font-medium hover:bg-slate-800 transition-colors text-sm mb-6">
+    Karşılaştır
+  </button>
+
+  <div id="compare-result" class="hidden">
+  </div>
+</div>
+
+<script>
+  interface PassportData {
+    code: string;
+    name: string;
+    rank: number;
+    visa_free: number;
+  }
+
+  let passports: PassportData[] = [];
+
+  fetch('/data/passport_rankings.json')
+    .then(r => r.json())
+    .then(data => {
+      const rankingMap = new Map<string, { rank: number; visa_free: number }>();
+      data.rankings.forEach((r: any) => {
+        r.passports.forEach((code: string) => {
+          rankingMap.set(code, { rank: r.rank, visa_free: r.visa_free_count });
+        });
+      });
+
+      const countryNames: Record<string, string> = {
+        TR: 'Türkiye', DE: 'Almanya', FR: 'Fransa', IT: 'İtalya', ES: 'İspanya',
+        GB: 'İngiltere', US: 'ABD', JP: 'Japonya', CN: 'Çin', RU: 'Rusya',
+        GR: 'Yunanistan', BG: 'Bulgaristan', AZ: 'Azerbaycan', GE: 'Gürcistan',
+        AE: 'BAE', SA: 'Suudi Arabistan', IN: 'Hindistan', BR: 'Brezilya',
+        MX: 'Meksika', KR: 'Güney Kore', AU: 'Avustralya', CA: 'Kanada',
+        NL: 'Hollanda', SE: 'İsveç', NO: 'Norveç', CH: 'İsviçre', AT: 'Avusturya',
+        BE: 'Belçika', PT: 'Portekiz', IE: 'İrlanda', NZ: 'Yeni Zelanda',
+        SG: 'Singapur', MY: 'Malezya', TH: 'Tayland', ID: 'Endonezya',
+        ZA: 'Güney Afrika', EG: 'Mısır', MA: 'Fas', TN: 'Tunus',
+        AR: 'Arjantin', CL: 'Şili', CO: 'Kolombiya', PE: 'Peru',
+        UA: 'Ukrayna', RS: 'Sırbistan', AL: 'Arnavutluk', BA: 'Bosna Hersek',
+        ME: 'Karadağ', MK: 'Kuzey Makedonya', MD: 'Moldova', XK: 'Kosova',
+        KZ: 'Kazakistan', UZ: 'Özbekistan', KG: 'Kırgızistan', TJ: 'Tacikistan',
+        IR: 'İran', IQ: 'Irak', SY: 'Suriye', LB: 'Lübnan', JO: 'Ürdün',
+        IL: 'İsrail', PK: 'Pakistan', BD: 'Bangladeş', LK: 'Sri Lanka',
+        VN: 'Vietnam', PH: 'Filipinler', MM: 'Myanmar', KH: 'Kamboçya',
+        LA: 'Laos', NP: 'Nepal', MV: 'Maldivler',
+        KE: 'Kenya', TZ: 'Tanzanya', ET: 'Etiyopya', NG: 'Nijerya',
+        GH: 'Gana', SN: 'Senegal',
+        CU: 'Küba', DO: 'Dominik Cumhuriyeti', JM: 'Jamaika',
+        CR: 'Kosta Rika', PA: 'Panama', EC: 'Ekvador', UY: 'Uruguay',
+        PY: 'Paraguay', BO: 'Bolivya', VE: 'Venezuela',
+        IS: 'İzlanda', DK: 'Danimarka', FI: 'Finlandiya', LU: 'Lüksemburg',
+        SI: 'Slovenya', SK: 'Slovakya', CZ: 'Çekya', PL: 'Polonya',
+        HU: 'Macaristan', RO: 'Romanya', HR: 'Hırvatistan',
+        CY: 'Kıbrıs', MT: 'Malta', EE: 'Estonya', LV: 'Letonya', LT: 'Litvanya',
+        LY: 'Libya', SD: 'Sudan',
+        QA: 'Katar', KW: 'Kuveyt', BH: 'Bahreyn', OM: 'Umman',
+        AF: 'Afganistan',
+      };
+
+      passports = Array.from(rankingMap.entries()).map(([code, data]) => ({
+        code,
+        name: countryNames[code] || code,
+        rank: data.rank,
+        visa_free: data.visa_free
+      }));
+
+      const sel1 = document.getElementById('compare-1') as HTMLSelectElement;
+      const sel2 = document.getElementById('compare-2') as HTMLSelectElement;
+
+      passports.sort((a, b) => a.name.localeCompare(b.name, 'tr')).forEach(p => {
+        const opt1 = document.createElement('option');
+        opt1.value = p.code;
+        opt1.textContent = `${p.name} (#${p.rank})`;
+        sel1.appendChild(opt1);
+
+        const opt2 = document.createElement('option');
+        opt2.value = p.code;
+        opt2.textContent = `${p.name} (#${p.rank})`;
+        sel2.appendChild(opt2);
+      });
+
+      sel1.value = 'TR';
+      sel2.value = 'DE';
+    })
+    .catch(() => {});
+
+  document.getElementById('compare-btn')?.addEventListener('click', () => {
+    const sel1 = document.getElementById('compare-1') as HTMLSelectElement;
+    const sel2 = document.getElementById('compare-2') as HTMLSelectElement;
+    const result = document.getElementById('compare-result');
+
+    if (!sel1.value || !sel2.value || !result) return;
+
+    const p1 = passports.find(p => p.code === sel1.value);
+    const p2 = passports.find(p => p.code === sel2.value);
+    if (!p1 || !p2) return;
+
+    const diff = p1.visa_free - p2.visa_free;
+    const diffText = diff > 0
+      ? `${p1.name} ${diff} ülke daha fazla vizesiz erişime sahip`
+      : diff < 0
+        ? `${p2.name} ${Math.abs(diff)} ülke daha fazla vizesiz erişime sahip`
+        : 'İki pasaport eşit vizesiz erişime sahip';
+
+    result.className = 'mt-4';
+    result.innerHTML = `
+      <div class="grid grid-cols-2 gap-4">
+        <div class="text-center p-4 bg-slate-50 rounded-lg border border-slate-200">
+          <div class="text-2xl mb-2">🇹🇷</div>
+          <div class="font-bold text-slate-900">${p1.name}</div>
+          <div class="text-3xl font-extrabold text-secondary mt-2">#${p1.rank}</div>
+          <div class="text-sm text-slate-500 mt-1">${p1.visa_free} vizesiz</div>
+        </div>
+        <div class="text-center p-4 bg-slate-50 rounded-lg border border-slate-200">
+          <div class="text-2xl mb-2">🏳️</div>
+          <div class="font-bold text-slate-900">${p2.name}</div>
+          <div class="text-3xl font-extrabold text-secondary mt-2">#${p2.rank}</div>
+          <div class="text-sm text-slate-500 mt-1">${p2.visa_free} vizesiz</div>
+        </div>
+      </div>
+      <div class="mt-4 p-3 rounded-lg ${diff > 0 ? 'bg-green-50 text-green-800' : diff < 0 ? 'bg-red-50 text-red-800' : 'bg-slate-50 text-slate-800'} text-sm text-center font-medium">
+        ${diffText}
+      </div>
+    `;
+    result.classList.remove('hidden');
+  });
+</script>

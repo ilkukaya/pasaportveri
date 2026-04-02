@@ -1,0 +1,80 @@
+---
+import type { Country } from '../utils/visaHelpers';
+
+interface Props {
+  countries: Country[];
+}
+
+const { countries } = Astro.props;
+---
+
+<div class="bg-white rounded-xl border border-slate-200 overflow-hidden">
+  <div class="overflow-x-auto">
+    <table class="w-full text-sm">
+      <thead class="bg-slate-50 border-b border-slate-200">
+        <tr>
+          <th class="text-left px-4 py-3 font-semibold text-slate-700" scope="col">Bayrak</th>
+          <th class="text-left px-4 py-3 font-semibold text-slate-700" scope="col">Ülke</th>
+          <th class="text-left px-4 py-3 font-semibold text-slate-700 hidden md:table-cell" scope="col">Kıta</th>
+          <th class="text-left px-4 py-3 font-semibold text-slate-700" scope="col">Vize Durumu</th>
+          <th class="text-left px-4 py-3 font-semibold text-slate-700 hidden sm:table-cell" scope="col">Kalış Süresi</th>
+          <th class="text-left px-4 py-3 font-semibold text-slate-700" scope="col"></th>
+        </tr>
+      </thead>
+      <tbody id="country-table-body">
+        {countries.map(country => (
+          <tr class="table-row border-b border-slate-100">
+            <td class="px-4 py-3">
+              <img
+                src={country.flag_url}
+                srcset={`${country.flag_url.replace('w80', 'w160')} 2x`}
+                width="32"
+                height="24"
+                alt={`${country.name_tr} bayrağı`}
+                loading="lazy"
+              />
+            </td>
+            <td class="px-4 py-3">
+              <a href={`/ulkeler/${country.slug}`} class="font-medium text-slate-900 hover:text-primary transition-colors">
+                {country.name_tr}
+              </a>
+            </td>
+            <td class="px-4 py-3 text-slate-500 hidden md:table-cell">{country.continent_tr}</td>
+            <td class="px-4 py-3">
+              <span class={`visa-badge ${country.visa_status}`}>
+                {country.visa_status_tr}
+              </span>
+            </td>
+            <td class="px-4 py-3 text-slate-500 hidden sm:table-cell">
+              {country.max_stay_days ? `${country.max_stay_days} gün` : '-'}
+            </td>
+            <td class="px-4 py-3">
+              <a
+                href={`/ulkeler/${country.slug}`}
+                class="text-secondary font-medium hover:underline text-xs"
+                aria-label={`${country.name_tr} detayları`}
+              >
+                İncele →
+              </a>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+  const searchInput = document.getElementById('country-search') as HTMLInputElement;
+  const tableBody = document.getElementById('country-table-body');
+  if (searchInput && tableBody) {
+    searchInput.addEventListener('input', (e) => {
+      const query = (e.target as HTMLInputElement).value.toLowerCase();
+      const rows = tableBody.querySelectorAll('tr');
+      rows.forEach(row => {
+        const text = row.textContent?.toLowerCase() || '';
+        (row as HTMLElement).style.display = text.includes(query) ? '' : 'none';
+      });
+    });
+  }
+</script>

@@ -1,0 +1,55 @@
+---
+interface Props {
+  type: 'insurance' | 'esim' | 'hotel';
+  countryName?: string;
+}
+
+const { type, countryName } = Astro.props;
+
+const affiliateLinks = {
+  insurance: {
+    url: 'https://safetywing.com/nomad-insurance?referenceID=REFID',
+    title: countryName ? `${countryName} İçin Seyahat Sigortası` : 'Seyahat Sigortası',
+    description: countryName
+      ? `${countryName} seyahatiniz için kapsamlı seyahat sigortası. Sağlık, bagaj kaybı ve uçuş iptali teminatı.`
+      : 'Yurt dışı seyahatinizde güvende olun. Sağlık, bagaj ve uçuş iptali teminatı.',
+    cta: 'Sigorta Al'
+  },
+  esim: {
+    url: 'https://ref.airalo.com/REFID',
+    title: countryName ? `${countryName} için eSIM` : 'Yurt Dışında İnternet: eSIM',
+    description: countryName
+      ? `${countryName}'de anında internet bağlantısı. Fiziksel SIM kart gerekmez, online aktifleştirin.`
+      : 'Yurt dışında anında internet. Fiziksel SIM kart gerekmez, online aktifleştirin.',
+    cta: 'eSIM Al'
+  },
+  hotel: {
+    url: 'https://tp.media/click?shmarker=MARKER&promo_id=4132&source_type=customlink&type=click&custom_url=booking.com',
+    title: countryName ? `${countryName}'de Konaklama` : 'En İyi Otel Fiyatları',
+    description: countryName
+      ? `${countryName}'de en uygun otel fiyatlarını karşılaştırın. Ücretsiz iptal seçenekleri.`
+      : 'Dünya genelinde en uygun otel fiyatlarını karşılaştırın. Ücretsiz iptal seçenekleri.',
+    cta: 'Otel Bul'
+  }
+};
+
+const link = affiliateLinks[type];
+---
+
+<div class="affiliate-banner bg-gradient-to-r from-secondary to-slate-800 rounded-xl p-5 text-white my-6 relative">
+  <span class="absolute top-2 right-3 text-[10px] text-slate-400 uppercase tracking-wider">Sponsorlu</span>
+  <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+    <div>
+      <h3 class="font-bold text-lg">{link.title}</h3>
+      <p class="text-slate-300 text-sm mt-1">{link.description}</p>
+    </div>
+    <a
+      href={link.url}
+      target="_blank"
+      rel="noopener noreferrer nofollow"
+      class="inline-flex items-center px-5 py-2.5 bg-white text-secondary font-semibold rounded-lg hover:bg-slate-100 transition-colors whitespace-nowrap text-sm"
+    >
+      {link.cta} →
+    </a>
+  </div>
+</div>

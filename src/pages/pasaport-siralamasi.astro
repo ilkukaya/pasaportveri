@@ -1,0 +1,132 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import AdSenseSlot from '../components/AdSenseSlot.astro';
+import { generateCategoryMeta } from '../utils/seoHelpers';
+
+import passportData from '../data/passport_data.json';
+import passportRankings from '../data/passport_rankings.json';
+
+const seo = generateCategoryMeta('pasaport-siralamasi');
+const rankings = passportRankings.rankings;
+const turkeyRank = rankings.find(r => r.passports.includes('TR'));
+
+const countryNames: Record<string, string> = {
+  TR: 'Türkiye', DE: 'Almanya', FR: 'Fransa', IT: 'İtalya', ES: 'İspanya',
+  GB: 'İngiltere', US: 'ABD', JP: 'Japonya', CN: 'Çin', RU: 'Rusya',
+  GR: 'Yunanistan', BG: 'Bulgaristan', AZ: 'Azerbaycan', GE: 'Gürcistan',
+  AE: 'BAE', SA: 'Suudi Arabistan', IN: 'Hindistan', BR: 'Brezilya',
+  MX: 'Meksika', KR: 'Güney Kore', AU: 'Avustralya', CA: 'Kanada',
+  NL: 'Hollanda', SE: 'İsveç', NO: 'Norveç', CH: 'İsviçre', AT: 'Avusturya',
+  BE: 'Belçika', PT: 'Portekiz', IE: 'İrlanda', NZ: 'Yeni Zelanda',
+  SG: 'Singapur', MY: 'Malezya', TH: 'Tayland', ID: 'Endonezya',
+  FI: 'Finlandiya', DK: 'Danimarka', LU: 'Lüksemburg',
+  HR: 'Hırvatistan', SI: 'Slovenya', SK: 'Slovakya', CZ: 'Çekya',
+  PL: 'Polonya', HU: 'Macaristan', RO: 'Romanya', EE: 'Estonya',
+  LV: 'Letonya', LT: 'Litvanya', IS: 'İzlanda', LI: 'Lihtenştayn'
+};
+---
+
+<BaseLayout title={seo.title} description={seo.description} canonical={seo.canonical} ogImage={seo.ogImage}>
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <Breadcrumb items={[
+      { label: 'Ana Sayfa', href: '/' },
+      { label: 'Pasaport Sıralaması' }
+    ]} />
+
+    <div class="mb-8">
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-3">
+        Dünya Pasaport Güç Sıralaması 2026
+      </h1>
+      <p class="text-lg text-slate-600">
+        Henley Passport Index verilerine göre dünya pasaport güç sıralaması.
+      </p>
+    </div>
+
+    {turkeyRank && (
+      <div class="bg-gradient-to-r from-primary to-red-700 text-white rounded-xl p-6 mb-8">
+        <div class="flex items-center gap-4">
+          <span class="text-4xl">🇹🇷</span>
+          <div>
+            <div class="text-sm text-red-200">Türk Pasaportu</div>
+            <div class="text-3xl font-extrabold">#{turkeyRank.rank}</div>
+            <div class="text-sm text-red-200">{turkeyRank.visa_free_count} vizesiz destinasyon</div>
+          </div>
+        </div>
+      </div>
+    )}
+
+    <div class="bg-white rounded-xl border border-slate-200 overflow-hidden">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-50 border-b border-slate-200">
+          <tr>
+            <th class="text-left px-4 py-3 font-semibold text-slate-700" scope="col">Sıra</th>
+            <th class="text-left px-4 py-3 font-semibold text-slate-700" scope="col">Ülkeler</th>
+            <th class="text-right px-4 py-3 font-semibold text-slate-700" scope="col">Vizesiz</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rankings.map(rank => {
+            const isTurkey = rank.passports.includes('TR');
+            const isTop3 = rank.rank <= 3;
+            return (
+              <tr class={`border-b border-slate-100 last:border-0 ${isTurkey ? 'bg-red-50' : isTop3 ? 'bg-amber-50/50' : ''}`}>
+                <td class="px-4 py-3">
+                  <span class={`font-bold ${isTurkey ? 'text-primary' : isTop3 ? 'text-amber-600' : 'text-slate-700'}`}>
+                    #{rank.rank}
+                  </span>
+                </td>
+                <td class="px-4 py-3">
+                  <div class="flex flex-wrap gap-1">
+                    {rank.passports.map(code => {
+                      const flagUrl = `https://flagcdn.com/w20/${code.toLowerCase()}.png`;
+                      return (
+                        <span class="inline-flex items-center gap-1 text-xs">
+                          <img src={flagUrl} width="16" height="12" alt="" loading="lazy" class="rounded" />
+                          {countryNames[code] || code}
+                        </span>
+                      );
+                    })}
+                  </div>
+                </td>
+                <td class="px-4 py-3 text-right font-semibold text-slate-900">
+                  {rank.visa_free_count}
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="bg-white rounded-xl border border-slate-200 p-6 mt-8">
+      <h2 class="text-lg font-bold text-slate-900 mb-4">Türkiye vs. Komşu Ülkeler</h2>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        {[
+          { code: 'TR', name: 'Türkiye', flag: '🇹🇷' },
+          { code: 'GR', name: 'Yunanistan', flag: '🇬🇷' },
+          { code: 'BG', name: 'Bulgaristan', flag: '🇧🇬' },
+          { code: 'GE', name: 'Gürcistan', flag: '🇬🇪' },
+          { code: 'AZ', name: 'Azerbaycan', flag: '🇦🇿' },
+          { code: 'IR', name: 'İran', flag: '🇮🇷' },
+          { code: 'IQ', name: 'Irak', flag: '🇮🇶' },
+          { code: 'SY', name: 'Suriye', flag: '🇸🇾' }
+        ].map(c => {
+          const rank = rankings.find(r => r.passports.includes(c.code));
+          return (
+            <div class={`text-center p-4 rounded-lg border ${c.code === 'TR' ? 'bg-red-50 border-red-200' : 'bg-slate-50 border-slate-200'}`}>
+              <div class="text-2xl mb-1">{c.flag}</div>
+              <div class="text-sm font-medium text-slate-900">{c.name}</div>
+              <div class="text-xl font-extrabold {c.code === 'TR' ? 'text-primary' : 'text-slate-700'}">
+                #{rank ? rank.rank : '-'}
+              </div>
+              <div class="text-xs text-slate-500">{rank ? `${rank.visa_free_count} vizesiz` : ''}</div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+
+    <AdSenseSlot slot="ADSENSE_SLOT_SIRALAMA_1" format="rectangle" />
+  </div>
+</BaseLayout>

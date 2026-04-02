@@ -1,0 +1,41 @@
+---
+import type { Country } from '../utils/visaHelpers';
+
+interface Props {
+  country: Country;
+}
+
+const { country } = Astro.props;
+---
+
+<a
+  href={`/ulkeler/${country.slug}`}
+  class="country-card block bg-white rounded-xl border border-slate-200 p-4 hover:border-slate-300"
+  aria-label={`${country.name_tr} vize bilgileri`}
+>
+  <div class="flex items-start gap-3">
+    <img
+      src={country.flag_url}
+      srcset={`${country.flag_url.replace('w80', 'w160')} 2x`}
+      width="48"
+      height="36"
+      alt={`${country.name_tr} bayrağı`}
+      loading="lazy"
+      class="rounded shadow-sm"
+    />
+    <div class="flex-1 min-w-0">
+      <div class="flex items-center justify-between gap-2">
+        <h3 class="font-semibold text-slate-900 truncate">{country.name_tr}</h3>
+        <span class={`visa-badge ${country.visa_status}`}>
+          {country.visa_status_tr}
+        </span>
+      </div>
+      <p class="text-sm text-slate-500 mt-1">{country.continent_tr}</p>
+      {country.max_stay_days && (
+        <p class="text-xs text-slate-400 mt-1">
+          Maksimum kalış: {country.max_stay_days} gün
+        </p>
+      )}
+    </div>
+  </div>
+</a>

@@ -1,0 +1,57 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import StayCalculator from '../components/StayCalculator.astro';
+import AdSenseSlot from '../components/AdSenseSlot.astro';
+import AffiliateBanner from '../components/AffiliateBanner.astro';
+import { generateCategoryMeta } from '../utils/seoHelpers';
+
+const seo = generateCategoryMeta('kac-gun-kalabilirim');
+---
+
+<BaseLayout title={seo.title} description={seo.description} canonical={seo.canonical} ogImage={seo.ogImage}>
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <Breadcrumb items={[
+      { label: 'Ana Sayfa', href: '/' },
+      { label: 'Kaç Gün Kalabilirim?' }
+    ]} />
+
+    <div class="mb-8">
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-3">
+        Kaç Gün Kalabilirim?
+      </h1>
+      <p class="text-lg text-slate-600">
+        Schengen 90/180 kuralı ve ülke bazlı kalış süresi hesaplama aracı.
+      </p>
+    </div>
+
+    <StayCalculator />
+
+    <div class="bg-white rounded-xl border border-slate-200 p-6 mt-8">
+      <h2 class="text-lg font-bold text-slate-900 mb-4">Schengen 90/180 Kuralı Nedir?</h2>
+      <div class="space-y-4 text-sm text-slate-700">
+        <p>
+          Schengen bölgesinde vizesiz kalış süresi <strong>180 gün içinde maksimum 90 gün</strong> ile sınırlıdır.
+          Bu kural, tüm Schengen ülkeleri için geçerlidir ve ülkeler arası geçişlerde toplam kalış süresi hesaplanır.
+        </p>
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+          <strong>Örnek:</strong> Eğer Ocak ayında 30 gün Fransa'da kaldıysanız, kalan 60 gününüzü
+          diğer Schengen ülkelerinde kullanabilirsiniz. 180 günlük pencere her gün kayar.
+        </div>
+        <h3 class="font-semibold text-slate-900">Schengen Ülkeleri:</h3>
+        <p class="text-slate-600">
+          Almanya, Avusturya, Belçika, Çekya, Danimarka, Estonya, Finlandiya, Fransa, Hollanda,
+          Hırvatistan, İspanya, İsveç, İsviçre, İtalya, Letonya, Litvanya, Lüksemburg, Macaristan,
+          Malta, Norveç, Polonya, Portekiz, Slovakya, Slovenya, Yunanistan, İzlanda.
+        </p>
+        <div class="bg-amber-50 border border-amber-200 rounded-lg p-4 text-amber-800">
+          <strong>⚠️ Uyarı:</strong> 90 günü aşmanız durumunda para cezası, sınır dışı veya Schengen
+          bölgesine giriş yasağı ile karşılaşabilirsiniz.
+        </div>
+      </div>
+    </div>
+
+    <AdSenseSlot slot="ADSENSE_SLOT_HESAPLAYICI_1" format="rectangle" />
+    <AffiliateBanner type="insurance" />
+  </div>
+</BaseLayout>

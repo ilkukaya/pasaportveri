@@ -1,0 +1,33 @@
+{
+  "last_updated": "2026-04-02",
+  "source": "Henley Passport Index",
+  "rankings": [
+    { "rank": 1, "passports": ["FR", "DE", "IT", "ES", "FI", "SE", "AT", "DK", "NL", "LU"], "visa_free_count": 194 },
+    { "rank": 2, "passports": ["BE", "CH", "IE", "JP", "NO", "NZ", "PT", "UK"], "visa_free_count": 193 },
+    { "rank": 3, "passports": ["AU", "CA", "GR", "CZ", "PL", "SK"], "visa_free_count": 191 },
+    { "rank": 4, "passports": ["HR", "SI", "EE", "LV", "LT", "IS", "LI"], "visa_free_count": 190 },
+    { "rank": 5, "passports": ["SG", "KR"], "visa_free_count": 189 },
+    { "rank": 6, "passports": ["US", "HK", "CY", "MT"], "visa_free_count": 187 },
+    { "rank": 7, "passports": ["MY"], "visa_free_count": 182 },
+    { "rank": 8, "passports": ["AE"], "visa_free_count": 180 },
+    { "rank": 9, "passports": ["IL"], "visa_free_count": 174 },
+    { "rank": 10, "passports": ["CL"], "visa_free_count": 172 },
+    { "rank": 11, "passports": ["BR", "AR"], "visa_free_count": 170 },
+    { "rank": 12, "passports": ["MX"], "visa_free_count": 161 },
+    { "rank": 13, "passports": ["BG"], "visa_free_count": 159 },
+    { "rank": 14, "passports": ["RO"], "visa_free_count": 157 },
+    { "rank": 15, "passports": ["RS", "BA", "ME", "MK", "AL"], "visa_free_count": 142 },
+    { "rank": 16, "passports": ["GE"], "visa_free_count": 130 },
+    { "rank": 17, "passports": ["AZ"], "visa_free_count": 125 },
+    { "rank": 18, "passports": ["MD", "UA"], "visa_free_count": 120 },
+    { "rank": 19, "passports": ["TH", "ZA"], "visa_free_count": 118 },
+    { "rank": 20, "passports": ["RU"], "visa_free_count": 114 },
+    { "rank": 21, "passports": ["TR"], "visa_free_count": 110 },
+    { "rank": 22, "passports": ["IR"], "visa_free_count": 85 },
+    { "rank": 23, "passports": ["IN", "MA", "TN"], "visa_free_count": 62 },
+    { "rank": 24, "passports": ["EG", "JO"], "visa_free_count": 55 },
+    { "rank": 25, "passports": ["CN"], "visa_free_count": 52 },
+    { "rank": 26, "passports": ["PK", "BD", "LK"], "visa_free_count": 45 },
+    { "rank": 27, "passports": ["IQ", "SY", "AF"], "visa_free_count": 32 }
+  ]
+}
