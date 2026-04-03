@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import AffiliateBanner from '../../components/AffiliateBanner.astro';
+import SponsoredTools from '../../components/SponsoredTools.astro';
 import AdSenseSlot from '../../components/AdSenseSlot.astro';
 import { getVisaStatusCounts } from '../../utils/visaHelpers';
 import { getRelatedCountries, formatPopulation, getStayText, getProcessingText } from '../../utils/countryHelpers';
@@ -404,10 +405,12 @@ const statusIcon: Record<string, string> = {
           </div>
         </div>
 
-        <!-- Affiliate Banners -->
-        <AffiliateBanner type="insurance" countryName={country.name_tr} />
-        <AffiliateBanner type="esim" countryName={country.name_tr} />
-        <AffiliateBanner type="hotel" countryName={country.name_tr} />
+        <!-- Affiliate Banners - Dynamic from JSON -->
+        <AffiliateBanner category="insurance" countryName={country.name_tr} />
+        <AffiliateBanner category="esim" countryName={country.name_tr} />
+
+        <!-- Sponsored Tools Grid -->
+        <SponsoredTools countryName={country.name_tr} variant="grid" limit={6} />
 
         <AdSenseSlot slot="ADSENSE_SLOT_COUNTRY_1" format="rectangle" />
       </div>
@@ -481,13 +484,8 @@ const statusIcon: Record<string, string> = {
           </div>
         </div>
 
-        <!-- Compact Affiliate Links -->
-        <div class="space-y-2">
-          <h3 class="font-bold text-slate-900 text-sm px-1">Seyahat Araclari</h3>
-          <AffiliateBanner type="insurance" countryName={country.name_tr} compact />
-          <AffiliateBanner type="esim" countryName={country.name_tr} compact />
-          <AffiliateBanner type="hotel" countryName={country.name_tr} compact />
-        </div>
+        <!-- Compact Affiliate Links - Dynamic from JSON -->
+        <SponsoredTools countryName={country.name_tr} variant="compact" limit={5} />
 
         <AdSenseSlot slot="ADSENSE_SLOT_COUNTRY_2" format="responsive" />
       </aside>
