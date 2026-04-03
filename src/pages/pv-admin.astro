@@ -1,6 +1,7 @@
 ---
 import passportData from '../data/passport_data.json';
 import countriesMeta from '../data/countries_meta.json';
+import affiliatePrograms from '../data/affiliate_programs.json';
 
 const countries = passportData.countries;
 const meta = (countriesMeta as any).countries;
@@ -86,10 +87,47 @@ const tp = passportData.turkish_passport;
     .toast { position: fixed; bottom: 24px; right: 24px; background: #22c55e; color: #fff; padding: 12px 20px; border-radius: 8px; font-size: 14px; display: none; z-index: 100; }
     .toast.error { background: #ef4444; }
 
+    .btn-success { background: #22c55e; color: #fff; }
+    .btn-success:hover { background: #16a34a; }
+
+    .program-card { background: #0f172a; border: 1px solid #334155; border-radius: 10px; padding: 16px; position: relative; transition: border-color 0.2s; }
+    .program-card:hover { border-color: #475569; }
+    .program-card.active-program { border-color: #22c55e; }
+    .program-card.inactive-program { opacity: 0.6; }
+    .program-card .program-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .program-card .program-name { font-size: 15px; font-weight: 600; color: #fff; display: flex; align-items: center; gap: 8px; }
+    .program-card .program-category { font-size: 11px; color: #94a3b8; background: #1e293b; padding: 2px 8px; border-radius: 4px; }
+    .program-card .program-status { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 4px; }
+    .program-card .status-active { background: #052e16; color: #22c55e; }
+    .program-card .status-inactive { background: #451a03; color: #f59e0b; }
+
+    .toggle-switch { position: relative; width: 40px; height: 22px; cursor: pointer; }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: #475569; border-radius: 11px; transition: 0.3s; }
+    .toggle-slider:before { content: ''; position: absolute; height: 16px; width: 16px; left: 3px; bottom: 3px; background: #fff; border-radius: 50%; transition: 0.3s; }
+    .toggle-switch input:checked + .toggle-slider { background: #22c55e; }
+    .toggle-switch input:checked + .toggle-slider:before { transform: translateX(18px); }
+
+    .add-program-btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 14px; background: transparent; border: 2px dashed #475569; border-radius: 10px; color: #94a3b8; font-size: 14px; cursor: pointer; transition: all 0.2s; }
+    .add-program-btn:hover { border-color: #3b82f6; color: #3b82f6; background: #172554; }
+
+    .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 200; }
+    .modal-overlay.show { display: flex; }
+    .modal-box { background: #1e293b; border: 1px solid #334155; border-radius: 16px; padding: 24px; max-width: 520px; width: 90%; max-height: 90vh; overflow-y: auto; }
+    .modal-box h3 { font-size: 18px; color: #fff; margin-bottom: 16px; }
+
+    .build-bar { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border: 1px solid #334155; border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 20px; }
+    .build-bar .build-info { font-size: 13px; color: #94a3b8; }
+    .build-bar .build-info strong { color: #fff; }
+
+    .save-indicator { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: #22c55e; opacity: 0; transition: opacity 0.3s; }
+    .save-indicator.visible { opacity: 1; }
+
     @media (max-width: 768px) {
       .sidebar { display: none; }
       .stats-grid { grid-template-columns: repeat(2, 1fr); }
       .search-box { width: 100%; }
+      .build-bar { flex-direction: column; text-align: center; }
     }
   </style>
 </head>
@@ -231,36 +269,156 @@ const tp = passportData.turkish_passport;
 
       <!-- Affiliates -->
       <div id="sec-affiliates" class="content-section">
-        <h2 style="font-size:20px;margin-bottom:16px;color:#fff;">Affiliate Ayarlari</h2>
-        <div class="card">
-          <h3>Seyahat Sigortasi (SafetyWing)</h3>
-          <div class="form-group">
-            <label>Referans URL</label>
-            <input type="text" value="https://safetywing.com/nomad-insurance?referenceID=REFID" id="aff-insurance" />
+        <h2 style="font-size:20px;margin-bottom:16px;color:#fff;">Affiliate Programlari</h2>
+
+        <!-- Build & Deploy Bar -->
+        <div class="build-bar">
+          <div class="build-info">
+            <strong>Degisiklikleri Yayinla</strong><br/>
+            Affiliate ayarlarini kaydedip siteyi yeniden olusturun.
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <span class="save-indicator" id="save-indicator">✓ Kaydedildi</span>
+            <button class="btn-sm btn-primary" id="btn-save-affiliates" style="padding:10px 20px;">
+              💾 Kaydet
+            </button>
+            <button class="btn-sm btn-success" id="btn-build-deploy" style="padding:10px 20px;">
+              🚀 Kaydet & Yayinla
+            </button>
           </div>
         </div>
-        <div class="card">
-          <h3>eSIM (Airalo)</h3>
-          <div class="form-group">
-            <label>Referans URL</label>
-            <input type="text" value="https://ref.airalo.com/REFID" id="aff-esim" />
+
+        <!-- Active Programs Count -->
+        <div class="stats-grid" style="margin-bottom:20px;">
+          <div class="stat-item">
+            <div class="label">Toplam Program</div>
+            <div class="value" style="color:#fff;" id="stat-total-programs">0</div>
+          </div>
+          <div class="stat-item">
+            <div class="label">Aktif Program</div>
+            <div class="value green" id="stat-active-programs">0</div>
+          </div>
+          <div class="stat-item">
+            <div class="label">Pasif Program</div>
+            <div class="value amber" id="stat-inactive-programs">0</div>
+          </div>
+          <div class="stat-item">
+            <div class="label">Son Guncelleme</div>
+            <div class="value" style="color:#fff;font-size:14px;" id="stat-aff-updated">-</div>
           </div>
         </div>
-        <div class="card">
-          <h3>Otel (Booking/Travelpayouts)</h3>
-          <div class="form-group">
-            <label>Referans URL</label>
-            <input type="text" value="https://tp.media/click?shmarker=MARKER&promo_id=4132&source_type=customlink&type=click&custom_url=booking.com" id="aff-hotel" />
-          </div>
-        </div>
-        <div class="card">
+
+        <!-- Program List -->
+        <div id="affiliate-programs-list"></div>
+
+        <!-- Add Program Button -->
+        <button class="add-program-btn" id="btn-add-program">
+          <span style="font-size:20px;">+</span> Yeni Affiliate Programi Ekle
+        </button>
+
+        <!-- AdSense Section -->
+        <div class="card" style="margin-top:20px;">
           <h3>Google AdSense</h3>
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+            <label class="toggle-switch">
+              <input type="checkbox" id="adsense-active" />
+              <span class="toggle-slider"></span>
+            </label>
+            <span style="font-size:13px;color:#94a3b8;">AdSense Aktif</span>
+          </div>
           <div class="form-group">
             <label>Publisher ID</label>
-            <input type="text" value="ca-pub-ADSENSE_PUB_ID" id="aff-adsense" />
+            <input type="text" id="adsense-pub-id" placeholder="ca-pub-XXXXXXXXXXXXXXXX" />
           </div>
         </div>
-        <p style="font-size:12px;color:#64748b;margin-top:8px;">Not: Affiliate URL'leri degistirmek icin src/components/AffiliateBanner.astro ve src/components/SEOHead.astro dosyalarini guncellemeniz gerekir.</p>
+
+        <p style="font-size:12px;color:#64748b;margin-top:12px;">
+          Ipucu: Programlari aktif/pasif yaparak sitede gosterilip gosterilmeyecegini kontrol edebilirsiniz.
+          Referans URL'nizi Travelpayouts veya diger affiliate aglarindan kopyalayarak yapistirin.
+        </p>
+      </div>
+
+      <!-- Add/Edit Program Modal -->
+      <div class="modal-overlay" id="program-modal">
+        <div class="modal-box">
+          <h3 id="modal-title">Yeni Program Ekle</h3>
+          <input type="hidden" id="modal-program-id" />
+          <div class="form-group">
+            <label>Program Adi *</label>
+            <input type="text" id="modal-name" placeholder="Ornegin: Expedia, Klook, NordVPN..." />
+          </div>
+          <div class="form-group">
+            <label>Kategori *</label>
+            <select id="modal-category">
+              <option value="insurance">Seyahat Sigortasi</option>
+              <option value="esim">eSIM</option>
+              <option value="hotel">Otel Rezervasyonu</option>
+              <option value="flight">Ucak Bileti</option>
+              <option value="transfer">Havaalani Transferi</option>
+              <option value="activity">Tur & Aktivite</option>
+              <option value="car_rental">Arac Kiralama</option>
+              <option value="vpn">VPN</option>
+              <option value="compensation">Ucus Tazminati</option>
+              <option value="tickets">Muze & Etkinlik</option>
+              <option value="other">Diger</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Referans URL *</label>
+            <input type="text" id="modal-url" placeholder="https://..." />
+          </div>
+          <div class="form-group">
+            <label>Baslik (Turkce)</label>
+            <input type="text" id="modal-title-tr" placeholder="Sitede gorunecek baslik" />
+          </div>
+          <div class="form-group">
+            <label>Aciklama (Turkce)</label>
+            <textarea id="modal-desc-tr" placeholder="Kisa aciklama (1-2 cumle)"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Buton Metni</label>
+            <input type="text" id="modal-cta-tr" placeholder="Ornegin: Hemen Al, Incele, Basvur..." />
+          </div>
+          <div class="form-group">
+            <label>Rozet Metni</label>
+            <input type="text" id="modal-badge-tr" placeholder="Ornegin: En Populer, Ucretsiz, Aninda Aktif..." />
+          </div>
+          <div class="form-group">
+            <label>Ikon</label>
+            <select id="modal-icon">
+              <option value="shield">🛡️ Kalkan (Sigorta)</option>
+              <option value="smartphone">📱 Telefon (eSIM)</option>
+              <option value="building">🏨 Bina (Otel)</option>
+              <option value="plane">✈️ Ucak (Bilet)</option>
+              <option value="car">🚗 Araba (Transfer)</option>
+              <option value="compass">🧭 Pusula (Tur)</option>
+              <option value="key">🔑 Anahtar (Kiralama)</option>
+              <option value="lock">🔒 Kilit (VPN)</option>
+              <option value="banknote">💰 Para (Tazminat)</option>
+              <option value="ticket">🎫 Bilet (Etkinlik)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Renk</label>
+            <select id="modal-color">
+              <option value="emerald">Yesil (Emerald)</option>
+              <option value="violet">Mor (Violet)</option>
+              <option value="blue">Mavi (Blue)</option>
+              <option value="sky">Acik Mavi (Sky)</option>
+              <option value="amber">Turuncu (Amber)</option>
+              <option value="orange">Koyu Turuncu (Orange)</option>
+              <option value="rose">Pembe (Rose)</option>
+              <option value="indigo">Lacivert (Indigo)</option>
+              <option value="teal">Turkuaz (Teal)</option>
+              <option value="pink">Acik Pembe (Pink)</option>
+            </select>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:20px;">
+            <button class="btn-sm btn-primary" id="modal-save" style="flex:1;padding:12px;">Kaydet</button>
+            <button class="btn-sm btn-ghost" id="modal-cancel" style="flex:1;padding:12px;">Iptal</button>
+          </div>
+          <button class="btn-sm btn-danger" id="modal-delete" style="width:100%;margin-top:8px;padding:10px;display:none;">Programi Sil</button>
+        </div>
       </div>
 
       <!-- SEO -->
@@ -377,7 +535,7 @@ const tp = passportData.turkish_passport;
 
 <div class="toast" id="toast"></div>
 
-<script define:vars={{ countries: JSON.stringify(countries) }}>
+<script define:vars={{ countries: JSON.stringify(countries), affiliateData: JSON.stringify(affiliatePrograms) }}>
   // --- Auth ---
   // SHA-256 hash of the admin password
   // Default password: "pasaportveri2026"
@@ -488,6 +646,209 @@ const tp = passportData.turkish_passport;
     t.style.display = 'block';
     setTimeout(() => { t.style.display = 'none'; }, 3000);
   }
+
+  // --- Affiliate Program Management ---
+  let affData = JSON.parse(affiliateData);
+  const categoryLabels = {
+    insurance: 'Seyahat Sigortasi', esim: 'eSIM', hotel: 'Otel Rezervasyonu',
+    flight: 'Ucak Bileti', transfer: 'Havaalani Transferi', activity: 'Tur & Aktivite',
+    car_rental: 'Arac Kiralama', vpn: 'VPN', compensation: 'Ucus Tazminati',
+    tickets: 'Muze & Etkinlik', other: 'Diger'
+  };
+  const iconLabels = {
+    shield: '🛡️', smartphone: '📱', building: '🏨', plane: '✈️', car: '🚗',
+    compass: '🧭', key: '🔑', lock: '🔒', banknote: '💰', ticket: '🎫'
+  };
+
+  function renderAffiliatePrograms() {
+    const list = document.getElementById('affiliate-programs-list');
+    const programs = affData.programs.sort((a, b) => a.sort_order - b.sort_order);
+    const activeCount = programs.filter(p => p.active).length;
+
+    document.getElementById('stat-total-programs').textContent = programs.length;
+    document.getElementById('stat-active-programs').textContent = activeCount;
+    document.getElementById('stat-inactive-programs').textContent = programs.length - activeCount;
+    document.getElementById('stat-aff-updated').textContent = affData.last_updated || '-';
+
+    // AdSense
+    document.getElementById('adsense-active').checked = affData.adsense?.active || false;
+    document.getElementById('adsense-pub-id').value = affData.adsense?.publisher_id || '';
+
+    list.innerHTML = programs.map(p => `
+      <div class="program-card ${p.active ? 'active-program' : 'inactive-program'}" data-id="${p.id}" style="margin-bottom:12px;">
+        <div class="program-header">
+          <div class="program-name">
+            <span>${iconLabels[p.icon] || '🔗'}</span>
+            ${p.name}
+            <span class="program-category">${categoryLabels[p.category] || p.category}</span>
+            <span class="program-status ${p.active ? 'status-active' : 'status-inactive'}">${p.active ? 'Aktif' : 'Pasif'}</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <label class="toggle-switch" title="${p.active ? 'Pasif yap' : 'Aktif yap'}">
+              <input type="checkbox" ${p.active ? 'checked' : ''} onchange="toggleProgram('${p.id}', this.checked)" />
+              <span class="toggle-slider"></span>
+            </label>
+            <button class="btn-sm btn-ghost" onclick="editProgram('${p.id}')" style="padding:6px 10px;">✏️</button>
+          </div>
+        </div>
+        <div style="font-size:12px;color:#64748b;">
+          <div style="margin-bottom:4px;"><strong style="color:#94a3b8;">URL:</strong> ${p.url ? '<span style="color:#3b82f6;">' + p.url.substring(0, 60) + (p.url.length > 60 ? '...' : '') + '</span>' : '<span style="color:#ef4444;">URL girilmedi</span>'}</div>
+          <div><strong style="color:#94a3b8;">Aciklama:</strong> ${p.description_tr || '-'}</div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function toggleProgram(id, active) {
+    const program = affData.programs.find(p => p.id === id);
+    if (program) {
+      program.active = active;
+      renderAffiliatePrograms();
+    }
+  }
+
+  function editProgram(id) {
+    const program = affData.programs.find(p => p.id === id);
+    if (!program) return;
+    document.getElementById('modal-title').textContent = 'Programi Duzenle: ' + program.name;
+    document.getElementById('modal-program-id').value = id;
+    document.getElementById('modal-name').value = program.name;
+    document.getElementById('modal-category').value = program.category;
+    document.getElementById('modal-url').value = program.url || '';
+    document.getElementById('modal-title-tr').value = program.title_tr || '';
+    document.getElementById('modal-desc-tr').value = program.description_tr || '';
+    document.getElementById('modal-cta-tr').value = program.cta_tr || '';
+    document.getElementById('modal-badge-tr').value = program.badge_tr || '';
+    document.getElementById('modal-icon').value = program.icon || 'shield';
+    document.getElementById('modal-color').value = program.color || 'blue';
+    document.getElementById('modal-delete').style.display = 'block';
+    document.getElementById('program-modal').classList.add('show');
+  }
+
+  window.toggleProgram = toggleProgram;
+  window.editProgram = editProgram;
+
+  document.getElementById('btn-add-program')?.addEventListener('click', () => {
+    document.getElementById('modal-title').textContent = 'Yeni Program Ekle';
+    document.getElementById('modal-program-id').value = '';
+    document.getElementById('modal-name').value = '';
+    document.getElementById('modal-category').value = 'insurance';
+    document.getElementById('modal-url').value = '';
+    document.getElementById('modal-title-tr').value = '';
+    document.getElementById('modal-desc-tr').value = '';
+    document.getElementById('modal-cta-tr').value = '';
+    document.getElementById('modal-badge-tr').value = '';
+    document.getElementById('modal-icon').value = 'shield';
+    document.getElementById('modal-color').value = 'blue';
+    document.getElementById('modal-delete').style.display = 'none';
+    document.getElementById('program-modal').classList.add('show');
+  });
+
+  document.getElementById('modal-cancel')?.addEventListener('click', () => {
+    document.getElementById('program-modal').classList.remove('show');
+  });
+
+  document.getElementById('modal-delete')?.addEventListener('click', () => {
+    const id = document.getElementById('modal-program-id').value;
+    if (id && confirm('Bu programi silmek istediginize emin misiniz?')) {
+      affData.programs = affData.programs.filter(p => p.id !== id);
+      renderAffiliatePrograms();
+      document.getElementById('program-modal').classList.remove('show');
+      showToast('Program silindi');
+    }
+  });
+
+  document.getElementById('modal-save')?.addEventListener('click', () => {
+    const name = document.getElementById('modal-name').value.trim();
+    const url = document.getElementById('modal-url').value.trim();
+    const category = document.getElementById('modal-category').value;
+
+    if (!name) { showToast('Program adi gerekli', true); return; }
+
+    const existingId = document.getElementById('modal-program-id').value;
+    const programData = {
+      name,
+      category,
+      category_tr: categoryLabels[category] || category,
+      url,
+      title_tr: document.getElementById('modal-title-tr').value.trim() || name,
+      description_tr: document.getElementById('modal-desc-tr').value.trim(),
+      cta_tr: document.getElementById('modal-cta-tr').value.trim() || 'Incele',
+      badge_tr: document.getElementById('modal-badge-tr').value.trim(),
+      icon: document.getElementById('modal-icon').value,
+      color: document.getElementById('modal-color').value,
+    };
+
+    if (existingId) {
+      const idx = affData.programs.findIndex(p => p.id === existingId);
+      if (idx >= 0) {
+        affData.programs[idx] = { ...affData.programs[idx], ...programData };
+      }
+    } else {
+      const newId = name.toLowerCase().replace(/[^a-z0-9]/g, '_').replace(/_+/g, '_');
+      const maxOrder = Math.max(0, ...affData.programs.map(p => p.sort_order));
+      affData.programs.push({
+        id: newId,
+        ...programData,
+        active: !!url,
+        sort_order: maxOrder + 1,
+      });
+    }
+
+    renderAffiliatePrograms();
+    document.getElementById('program-modal').classList.remove('show');
+    showToast(existingId ? 'Program guncellendi' : 'Yeni program eklendi');
+  });
+
+  // Save affiliate data (generates downloadable JSON)
+  document.getElementById('btn-save-affiliates')?.addEventListener('click', () => {
+    saveAffiliateData();
+    showToast('Affiliate verileri kaydedildi');
+    const indicator = document.getElementById('save-indicator');
+    indicator.classList.add('visible');
+    setTimeout(() => indicator.classList.remove('visible'), 3000);
+  });
+
+  // Save & Build
+  document.getElementById('btn-build-deploy')?.addEventListener('click', () => {
+    saveAffiliateData();
+    showToast('Veriler kaydedildi! affiliate_programs.json dosyasini indirin ve projeye ekleyin, ardindan deploy edin.');
+
+    // Auto-download the file
+    setTimeout(() => {
+      downloadAffiliateJson();
+    }, 500);
+  });
+
+  function saveAffiliateData() {
+    // Update AdSense data
+    affData.adsense = {
+      publisher_id: document.getElementById('adsense-pub-id').value.trim(),
+      active: document.getElementById('adsense-active').checked
+    };
+    affData.last_updated = new Date().toISOString().split('T')[0];
+
+    // Store in sessionStorage for persistence during session
+    sessionStorage.setItem('pv_affiliate_data', JSON.stringify(affData));
+  }
+
+  function downloadAffiliateJson() {
+    const blob = new Blob([JSON.stringify(affData, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'affiliate_programs.json';
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  // Restore from session if available
+  const savedAff = sessionStorage.getItem('pv_affiliate_data');
+  if (savedAff) {
+    try { affData = JSON.parse(savedAff); } catch(e) {}
+  }
+
+  renderAffiliatePrograms();
 </script>
 
 </body>
