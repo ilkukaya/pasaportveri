@@ -43,22 +43,22 @@ const jsonLd = generateWebsiteSchema();
       </p>
 
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-3xl mx-auto mb-8">
-        <div class="stat-card bg-white/10 backdrop-blur-sm border border-white/20">
-          <div class="stat-number text-green-400">{counts.visa_free}</div>
+        <a href="/vizesiz-ulkeler" class="stat-card bg-white/10 backdrop-blur-sm border border-white/20 cursor-pointer hover:bg-white/20 transition-all group" data-stat-filter="visa_free">
+          <div class="stat-number text-green-400 group-hover:scale-110 transition-transform">{counts.visa_free}</div>
           <div class="text-sm text-slate-300 font-medium">Vizesiz</div>
-        </div>
-        <div class="stat-card bg-white/10 backdrop-blur-sm border border-white/20">
-          <div class="stat-number text-amber-400">{counts.visa_on_arrival}</div>
+        </a>
+        <a href="/kapida-vize" class="stat-card bg-white/10 backdrop-blur-sm border border-white/20 cursor-pointer hover:bg-white/20 transition-all group" data-stat-filter="visa_on_arrival">
+          <div class="stat-number text-amber-400 group-hover:scale-110 transition-transform">{counts.visa_on_arrival}</div>
           <div class="text-sm text-slate-300 font-medium">Kapıda Vize</div>
-        </div>
-        <div class="stat-card bg-white/10 backdrop-blur-sm border border-white/20">
-          <div class="stat-number text-blue-400">{counts.e_visa}</div>
+        </a>
+        <a href="/e-vize" class="stat-card bg-white/10 backdrop-blur-sm border border-white/20 cursor-pointer hover:bg-white/20 transition-all group" data-stat-filter="e_visa">
+          <div class="stat-number text-blue-400 group-hover:scale-110 transition-transform">{counts.e_visa}</div>
           <div class="text-sm text-slate-300 font-medium">E-Vize</div>
-        </div>
-        <div class="stat-card bg-white/10 backdrop-blur-sm border border-white/20">
-          <div class="stat-number text-red-400">{counts.visa_required}</div>
+        </a>
+        <a href="/vize-gerekli" class="stat-card bg-white/10 backdrop-blur-sm border border-white/20 cursor-pointer hover:bg-white/20 transition-all group" data-stat-filter="visa_required">
+          <div class="stat-number text-red-400 group-hover:scale-110 transition-transform">{counts.visa_required}</div>
           <div class="text-sm text-slate-300 font-medium">Vize Gerekli</div>
-        </div>
+        </a>
       </div>
 
       <SearchBar />

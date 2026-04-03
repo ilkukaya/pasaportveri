@@ -62,26 +62,17 @@ const visaStatuses = [
 </div>
 
 <script>
-  let activeContinent = 'all';
-  let activeVisaStatus = 'all';
-
-  function filterTable() {
-    const rows = document.querySelectorAll('#country-table-body tr');
-    rows.forEach(row => {
-      const continent = (row as HTMLElement).dataset.continent || '';
-      const visaStatus = (row as HTMLElement).dataset.visaStatus || '';
-      const matchContinent = activeContinent === 'all' || continent === activeContinent;
-      const matchVisa = activeVisaStatus === 'all' || visaStatus === activeVisaStatus;
-      (row as HTMLElement).style.display = (matchContinent && matchVisa) ? '' : 'none';
-    });
+  function triggerFilters() {
+    if (typeof (window as any).__applyAllFilters === 'function') {
+      (window as any).__applyAllFilters();
+    }
   }
 
   document.querySelectorAll('[data-continent]').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('[data-continent]').forEach(b => b.classList.remove('active'));
       (btn as HTMLElement).classList.add('active');
-      activeContinent = (btn as HTMLElement).dataset.continent || 'all';
-      filterTable();
+      triggerFilters();
     });
   });
 
@@ -89,8 +80,7 @@ const visaStatuses = [
     btn.addEventListener('click', () => {
       document.querySelectorAll('[data-visa-status]').forEach(b => b.classList.remove('active'));
       (btn as HTMLElement).classList.add('active');
-      activeVisaStatus = (btn as HTMLElement).dataset.visaStatus || 'all';
-      filterTable();
+      triggerFilters();
     });
   });
 </script>
