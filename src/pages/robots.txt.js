@@ -1,6 +1,7 @@
 export async function GET() {
   const robots = `User-agent: *
 Allow: /
+Disallow: /pv-admin
 
 Sitemap: https://pasaportveri.com/sitemap.xml
 `;
