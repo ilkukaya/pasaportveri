@@ -6,9 +6,10 @@ interface Props {
   ogImage?: string;
   ogType?: string;
   jsonLd?: string;
+  jsonLdArray?: string[];
 }
 
-const { title, description, canonical = 'https://pasaportveri.com/', ogImage = 'https://pasaportveri.com/og-image.png', ogType = 'website', jsonLd } = Astro.props;
+const { title, description, canonical = 'https://pasaportveri.com/', ogImage = 'https://pasaportveri.com/og-image.png', ogType = 'website', jsonLd, jsonLdArray } = Astro.props;
 ---
 
 <title>{title}</title>
@@ -30,6 +31,8 @@ const { title, description, canonical = 'https://pasaportveri.com/', ogImage = '
 <meta name="twitter:image" content={ogImage} />
 
 {jsonLd && <script type="application/ld+json" set:html={jsonLd} />}
+{jsonLdArray && jsonLdArray.map(schema => (
+  <script type="application/ld+json" set:html={schema} />
+))}
 
-<script is:inline src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-ADSENSE_PUB_ID" async crossorigin="anonymous"></script>
 <script is:inline defer data-domain="pasaportveri.com" src="https://plausible.io/js/script.js"></script>

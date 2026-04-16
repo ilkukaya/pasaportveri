@@ -117,7 +117,7 @@ const countryNames: Record<string, string> = {
             <div class={`text-center p-4 rounded-lg border ${c.code === 'TR' ? 'bg-red-50 border-red-200' : 'bg-slate-50 border-slate-200'}`}>
               <div class="text-2xl mb-1">{c.flag}</div>
               <div class="text-sm font-medium text-slate-900">{c.name}</div>
-              <div class="text-xl font-extrabold {c.code === 'TR' ? 'text-primary' : 'text-slate-700'}">
+              <div class={`text-xl font-extrabold ${c.code === 'TR' ? 'text-primary' : 'text-slate-700'}`}>
                 #{rank ? rank.rank : '-'}
               </div>
               <div class="text-xs text-slate-500">{rank ? `${rank.visa_free_count} vizesiz` : ''}</div>

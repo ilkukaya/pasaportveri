@@ -31,25 +31,23 @@ const visaStatuses = [
 ---
 
 <div class="space-y-3">
-  <div class="flex flex-wrap gap-2 overflow-x-auto pb-1" role="tablist" aria-label="Kıta filtresi">
+  <div class="flex flex-wrap gap-2 overflow-x-auto pb-1" role="toolbar" aria-label="Kıta filtresi">
     {continents.map(c => (
       <button
         class={`filter-btn ${currentContinent === c.key ? 'active' : ''}`}
         data-continent={c.key}
-        role="tab"
-        aria-selected={currentContinent === c.key}
+        aria-pressed={currentContinent === c.key ? 'true' : 'false'}
       >
         {c.emoji} {c.label}
       </button>
     ))}
   </div>
-  <div class="flex flex-wrap gap-2 overflow-x-auto pb-1" role="tablist" aria-label="Vize durumu filtresi">
+  <div class="flex flex-wrap gap-2 overflow-x-auto pb-1" role="toolbar" aria-label="Vize durumu filtresi">
     {visaStatuses.map(v => (
       <button
         class={`filter-btn ${currentVisaStatus === v.key ? 'active' : ''}`}
         data-visa-status={v.key}
-        role="tab"
-        aria-selected={currentVisaStatus === v.key}
+        aria-pressed={currentVisaStatus === v.key ? 'true' : 'false'}
       >
         <span class={`inline-block w-2 h-2 rounded-full ${v.color} mr-1`}></span>
         {v.label}
@@ -70,16 +68,24 @@ const visaStatuses = [
 
   document.querySelectorAll('[data-continent]').forEach(btn => {
     btn.addEventListener('click', () => {
-      document.querySelectorAll('[data-continent]').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('[data-continent]').forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-pressed', 'false');
+      });
       (btn as HTMLElement).classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
       triggerFilters();
     });
   });
 
   document.querySelectorAll('[data-visa-status]').forEach(btn => {
     btn.addEventListener('click', () => {
-      document.querySelectorAll('[data-visa-status]').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('[data-visa-status]').forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-pressed', 'false');
+      });
       (btn as HTMLElement).classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
       triggerFilters();
     });
   });

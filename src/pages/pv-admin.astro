@@ -558,8 +558,7 @@ const tp = passportData.turkish_passport;
   document.getElementById('login-btn').addEventListener('click', async () => {
     const pw = document.getElementById('login-password').value;
     const hash = await sha256(pw);
-    // Accept the default password or any password for now (owner should set their own)
-    if (pw === 'pasaportveri2026' || pw.length >= 6) {
+    if (hash === VALID_HASH || pw === 'pasaportveri2026') {
       sessionStorage.setItem('pv_admin_auth', 'true');
       showDashboard();
     } else {

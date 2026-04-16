@@ -11,9 +11,10 @@ interface Props {
   ogImage?: string;
   ogType?: string;
   jsonLd?: string;
+  jsonLdArray?: string[];
 }
 
-const { title, description, canonical, ogImage, ogType, jsonLd } = Astro.props;
+const { title, description, canonical, ogImage, ogType, jsonLd, jsonLdArray } = Astro.props;
 ---
 
 <!doctype html>
@@ -23,7 +24,7 @@ const { title, description, canonical, ogImage, ogType, jsonLd } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://flagcdn.com" />
-    <SEOHead title={title} description={description} canonical={canonical} ogImage={ogImage} ogType={ogType} jsonLd={jsonLd} />
+    <SEOHead title={title} description={description} canonical={canonical} ogImage={ogImage} ogType={ogType} jsonLd={jsonLd} jsonLdArray={jsonLdArray} />
   </head>
   <body class="min-h-screen flex flex-col bg-slate-50">
     <Header />

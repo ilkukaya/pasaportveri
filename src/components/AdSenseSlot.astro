@@ -1,4 +1,9 @@
 ---
+/**
+ * AdSense slot placeholder.
+ * Set ADSENSE_PUB_ID in environment/build config to enable.
+ * When the pub ID is not configured, this component renders nothing.
+ */
 interface Props {
   slot: string;
   format?: 'auto' | 'rectangle' | 'leaderboard' | 'skyscraper';
@@ -6,36 +11,19 @@ interface Props {
 }
 
 const { slot, format = 'auto', fullWidth = false } = Astro.props;
+const pubId = import.meta.env.PUBLIC_ADSENSE_PUB_ID || '';
+const isEnabled = pubId && pubId !== 'ca-pub-ADSENSE_PUB_ID';
 ---
 
-<div class={`adsense-wrapper ${fullWidth ? 'w-full' : ''}`} aria-label="Reklam">
-  <ins
-    class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-ADSENSE_PUB_ID"
-    data-ad-slot={slot}
-    data-ad-format={format}
-    data-full-width-responsive={fullWidth ? 'true' : 'false'}
-  ></ins>
-</div>
-
-<script is:inline>
-  (function() {
-    var observer = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          var ins = entry.target.querySelector('ins');
-          if (ins && !ins.classList.contains('adsbygoogle-loaded')) {
-            (window.adsbygoogle = window.adsbygoogle || []).push({});
-            ins.classList.add('adsbygoogle-loaded');
-          }
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { rootMargin: '100px' });
-
-    document.querySelectorAll('.adsense-wrapper').forEach(function(el) {
-      observer.observe(el);
-    });
-  })();
-</script>
+{isEnabled && (
+  <div class={`adsense-wrapper ${fullWidth ? 'w-full' : ''}`} aria-label="Reklam">
+    <ins
+      class="adsbygoogle"
+      style="display:block"
+      data-ad-client={pubId}
+      data-ad-slot={slot}
+      data-ad-format={format}
+      data-full-width-responsive={fullWidth ? 'true' : 'false'}
+    ></ins>
+  </div>
+)}

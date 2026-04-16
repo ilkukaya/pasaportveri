@@ -27,8 +27,8 @@ passports.sort((a, b) => a.name.localeCompare(b.name, 'tr'));
 ---
 
 <div class="bg-white rounded-xl border border-slate-200 p-6" id="passport-comparator">
-  <h2 class="text-xl font-bold text-slate-900 mb-2">Pasaport Karsilastir</h2>
-  <p class="text-sm text-slate-500 mb-6">Iki pasaportu yan yana karsilastirin. Hangi pasaport daha guclu?</p>
+  <h2 class="text-xl font-bold text-slate-900 mb-2">Pasaport Karşılaştır</h2>
+  <p class="text-sm text-slate-500 mb-6">İki pasaportu yan yana karşılaştırın. Hangi pasaport daha güçlü?</p>
 
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
     <div>
@@ -54,7 +54,7 @@ passports.sort((a, b) => a.name.localeCompare(b.name, 'tr'));
   </div>
 
   <button id="compare-btn" class="w-full bg-secondary text-white py-2.5 rounded-lg font-medium hover:bg-slate-800 transition-colors text-sm mb-6">
-    Karsilastir
+    Karşılaştır
   </button>
 
   <div id="compare-result" class="hidden">
@@ -81,13 +81,13 @@ passports.sort((a, b) => a.name.localeCompare(b.name, 'tr'));
     let diffText = '';
     let diffClass = '';
     if (diff > 0) {
-      diffText = p1.name + ', ' + Math.abs(diff) + ' ulke daha fazla vizesiz erisime sahip';
+      diffText = p1.name + ', ' + Math.abs(diff) + ' ülke daha fazla vizesiz erişime sahip';
       diffClass = 'bg-green-50 border-green-200 text-green-800';
     } else if (diff < 0) {
-      diffText = p2.name + ', ' + Math.abs(diff) + ' ulke daha fazla vizesiz erisime sahip';
+      diffText = p2.name + ', ' + Math.abs(diff) + ' ülke daha fazla vizesiz erişime sahip';
       diffClass = 'bg-red-50 border-red-200 text-red-800';
     } else {
-      diffText = 'Iki pasaport esit vizesiz erisime sahip';
+      diffText = 'İki pasaport eşit vizesiz erişime sahip';
       diffClass = 'bg-slate-50 border-slate-200 text-slate-800';
     }
 
@@ -98,21 +98,21 @@ passports.sort((a, b) => a.name.localeCompare(b.name, 'tr'));
           '<div class="text-3xl mb-2">' + p1.flag + '</div>' +
           '<div class="font-bold text-slate-900 text-lg">' + p1.name + '</div>' +
           '<div class="text-4xl font-extrabold text-secondary mt-2">#' + p1.rank + '</div>' +
-          '<div class="text-sm text-slate-500 mt-1">' + p1.visa_free + ' ulke vizesiz</div>' +
+          '<div class="text-sm text-slate-500 mt-1">' + p1.visa_free + ' ülke vizesiz</div>' +
           '<div class="mt-3 bg-slate-200 rounded-full h-2 overflow-hidden">' +
             '<div class="bg-green-500 h-full rounded-full" style="width: ' + p1Pct + '%"></div>' +
           '</div>' +
-          '<div class="text-xs text-slate-400 mt-1">%' + p1Pct + ' erisim</div>' +
+          '<div class="text-xs text-slate-400 mt-1">%' + p1Pct + ' erişim</div>' +
         '</div>' +
         '<div class="text-center p-5 bg-slate-50 rounded-xl border border-slate-200">' +
           '<div class="text-3xl mb-2">' + p2.flag + '</div>' +
           '<div class="font-bold text-slate-900 text-lg">' + p2.name + '</div>' +
           '<div class="text-4xl font-extrabold text-secondary mt-2">#' + p2.rank + '</div>' +
-          '<div class="text-sm text-slate-500 mt-1">' + p2.visa_free + ' ulke vizesiz</div>' +
+          '<div class="text-sm text-slate-500 mt-1">' + p2.visa_free + ' ülke vizesiz</div>' +
           '<div class="mt-3 bg-slate-200 rounded-full h-2 overflow-hidden">' +
             '<div class="bg-green-500 h-full rounded-full" style="width: ' + p2Pct + '%"></div>' +
           '</div>' +
-          '<div class="text-xs text-slate-400 mt-1">%' + p2Pct + ' erisim</div>' +
+          '<div class="text-xs text-slate-400 mt-1">%' + p2Pct + ' erişim</div>' +
         '</div>' +
       '</div>' +
       '<div class="p-3 rounded-lg border ' + diffClass + ' text-sm text-center font-medium">' + diffText + '</div>';
